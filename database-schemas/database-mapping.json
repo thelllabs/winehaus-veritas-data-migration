@@ -1,0 +1,858 @@
+{
+  "database_mapping": {
+    "metadata": {
+      "description": "Mapping from Legacy SQL Server Database to New PostgreSQL Database",
+      "legacy_database": "SQL Server (dbo schema)",
+      "new_database": "PostgreSQL (public schema)",
+      "version": "1.0"
+    },
+    "mappings": {
+      "users_and_authentication": {
+        "description": "User management and authentication tables",
+        "mappings": [
+          {
+            "legacy_table": "Users",
+            "legacy_column": "UserID",
+            "new_table": "users",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Primary key changed from int to uuid"
+          },
+          {
+            "legacy_table": "Users",
+            "legacy_column": "FirstName",
+            "new_table": "users",
+            "new_column": "first_name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Snake case naming convention"
+          },
+          {
+            "legacy_table": "Users",
+            "legacy_column": "LastName",
+            "new_table": "users",
+            "new_column": "last_name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Snake case naming convention"
+          },
+          {
+            "legacy_table": "Users",
+            "legacy_column": "Email",
+            "new_table": "users",
+            "new_column": "email",
+            "data_type_change": "varchar → character varying",
+            "notes": "Direct mapping"
+          },
+          {
+            "legacy_table": "Users",
+            "legacy_column": "Password",
+            "new_table": "users",
+            "new_column": "password",
+            "data_type_change": "varchar → character varying",
+            "notes": "Direct mapping"
+          },
+          {
+            "legacy_table": "Users",
+            "legacy_column": "Role",
+            "new_table": "users",
+            "new_column": "roles",
+            "data_type_change": "varchar → tenant_user_role_enum[]",
+            "notes": "Changed to array of enums"
+          },
+          {
+            "legacy_table": "Users",
+            "legacy_column": "IsActive",
+            "new_table": "users",
+            "new_column": "status",
+            "data_type_change": "bit → tenant_user_status_enum",
+            "notes": "Mapped to enum (enabled/blocked)"
+          },
+          {
+            "legacy_table": "Users",
+            "legacy_column": "DateCreated",
+            "new_table": "users",
+            "new_column": "created_at",
+            "data_type_change": "datetime → timestamp with time zone",
+            "notes": "Standardized timestamp"
+          },
+          {
+            "legacy_table": "Users",
+            "legacy_column": "DateUpdated",
+            "new_table": "users",
+            "new_column": "updated_at",
+            "data_type_change": "datetime → timestamp with time zone",
+            "notes": "Standardized timestamp"
+          }
+        ]
+      },
+      "accounts_to_users": {
+        "description": "Accounts table merged into users table",
+        "mappings": [
+          {
+            "legacy_table": "Accounts",
+            "legacy_column": "AccountID",
+            "new_table": "users",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Merged into users table"
+          },
+          {
+            "legacy_table": "Accounts",
+            "legacy_column": "AccountName",
+            "new_table": "users",
+            "new_column": "name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Moved to users table"
+          },
+          {
+            "legacy_table": "Accounts",
+            "legacy_column": "FirstName",
+            "new_table": "users",
+            "new_column": "first_name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Moved to users table"
+          },
+          {
+            "legacy_table": "Accounts",
+            "legacy_column": "LastName",
+            "new_table": "users",
+            "new_column": "last_name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Moved to users table"
+          },
+          {
+            "legacy_table": "Accounts",
+            "legacy_column": "Email",
+            "new_table": "users",
+            "new_column": "email",
+            "data_type_change": "varchar → character varying",
+            "notes": "Moved to users table"
+          },
+          {
+            "legacy_table": "Accounts",
+            "legacy_column": "IsActive",
+            "new_table": "users",
+            "new_column": "status",
+            "data_type_change": "bit → tenant_user_status_enum",
+            "notes": "Mapped to enum"
+          },
+          {
+            "legacy_table": "Accounts",
+            "legacy_column": "Notes",
+            "new_table": "users",
+            "new_column": "notes",
+            "data_type_change": "varchar → character varying",
+            "notes": "Moved to users table"
+          }
+        ],
+        "unmapped_columns": [
+          {
+            "legacy_table": "Accounts",
+            "legacy_column": "NormalPrice",
+            "notes": "Not migrated - pricing logic changed"
+          },
+          {
+            "legacy_table": "Accounts",
+            "legacy_column": "BreakVolume1",
+            "notes": "Not migrated - pricing logic changed"
+          },
+          {
+            "legacy_table": "Accounts",
+            "legacy_column": "BreakVolume2",
+            "notes": "Not migrated - pricing logic changed"
+          },
+          {
+            "legacy_table": "Accounts",
+            "legacy_column": "BreakPrice1",
+            "notes": "Not migrated - pricing logic changed"
+          },
+          {
+            "legacy_table": "Accounts",
+            "legacy_column": "BreakPrice2",
+            "notes": "Not migrated - pricing logic changed"
+          }
+        ]
+      },
+      "addresses": {
+        "description": "Address management table",
+        "mappings": [
+          {
+            "legacy_table": "Addresses",
+            "legacy_column": "AddressID",
+            "new_table": "addresses",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Primary key changed from int to uuid"
+          },
+          {
+            "legacy_table": "Addresses",
+            "legacy_column": "AddressName",
+            "new_table": "addresses",
+            "new_column": "name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Direct mapping"
+          },
+          {
+            "legacy_table": "Addresses",
+            "legacy_column": "AddressLine1",
+            "new_table": "addresses",
+            "new_column": "address_line_1",
+            "data_type_change": "varchar → character varying",
+            "notes": "Snake case naming"
+          },
+          {
+            "legacy_table": "Addresses",
+            "legacy_column": "AddressLine2",
+            "new_table": "addresses",
+            "new_column": "address_line_2",
+            "data_type_change": "varchar → character varying",
+            "notes": "Snake case naming"
+          },
+          {
+            "legacy_table": "Addresses",
+            "legacy_column": "City",
+            "new_table": "addresses",
+            "new_column": "city",
+            "data_type_change": "varchar → character varying",
+            "notes": "Direct mapping"
+          },
+          {
+            "legacy_table": "Addresses",
+            "legacy_column": "State",
+            "new_table": "addresses",
+            "new_column": "state",
+            "data_type_change": "varchar → character varying",
+            "notes": "Direct mapping"
+          },
+          {
+            "legacy_table": "Addresses",
+            "legacy_column": "ZipCode",
+            "new_table": "addresses",
+            "new_column": "postal_code",
+            "data_type_change": "varchar → character varying",
+            "notes": "Renamed for clarity"
+          },
+          {
+            "legacy_table": "Addresses",
+            "legacy_column": "AccountID",
+            "new_table": "addresses",
+            "new_column": "user_id",
+            "data_type_change": "int → uuid",
+            "notes": "Foreign key relationship changed"
+          }
+        ],
+        "unmapped_columns": [
+          {
+            "legacy_table": "Addresses",
+            "legacy_column": "AddressType",
+            "notes": "Not migrated - simplified structure"
+          },
+          {
+            "legacy_table": "Addresses",
+            "legacy_column": "PreferredShipping",
+            "notes": "Not migrated - simplified structure"
+          },
+          {
+            "legacy_table": "Addresses",
+            "legacy_column": "PreferredBilling",
+            "notes": "Not migrated - simplified structure"
+          },
+          {
+            "legacy_table": "Addresses",
+            "legacy_column": "IsActive",
+            "notes": "Not migrated - soft delete via deleted_at"
+          }
+        ]
+      },
+      "cases": {
+        "description": "Case management table",
+        "mappings": [
+          {
+            "legacy_table": "Cases",
+            "legacy_column": "CaseID",
+            "new_table": "cases",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Primary key changed from int to uuid"
+          },
+          {
+            "legacy_table": "Cases",
+            "legacy_column": "AccountID",
+            "new_table": "cases",
+            "new_column": "customer_id",
+            "data_type_change": "int → uuid",
+            "notes": "Renamed for clarity"
+          },
+          {
+            "legacy_table": "Cases",
+            "legacy_column": "DateCreated",
+            "new_table": "cases",
+            "new_column": "created_at",
+            "data_type_change": "datetime → timestamp with time zone",
+            "notes": "Standardized timestamp"
+          },
+          {
+            "legacy_table": "Cases",
+            "legacy_column": "DateUpdated",
+            "new_table": "cases",
+            "new_column": "updated_at",
+            "data_type_change": "datetime → timestamp with time zone",
+            "notes": "Standardized timestamp"
+          },
+          {
+            "legacy_table": "Cases",
+            "legacy_column": "MaxQuantity",
+            "new_table": "cases",
+            "new_column": "max_items",
+            "data_type_change": "smallint → integer",
+            "notes": "Renamed for clarity"
+          }
+        ],
+        "unmapped_columns": [
+          {
+            "legacy_table": "Cases",
+            "legacy_column": "IsActive",
+            "notes": "Not migrated - soft delete via deleted_at"
+          },
+          {
+            "legacy_table": "Cases",
+            "legacy_column": "CaseNumber",
+            "notes": "Not migrated - simplified structure"
+          },
+          {
+            "legacy_table": "Cases",
+            "legacy_column": "CaseLocationID",
+            "notes": "Not migrated - simplified structure"
+          },
+          {
+            "legacy_table": "Cases",
+            "legacy_column": "LockerID",
+            "notes": "Not migrated - simplified structure"
+          },
+          {
+            "legacy_table": "Cases",
+            "legacy_column": "isUsed",
+            "notes": "Not migrated - simplified structure"
+          }
+        ]
+      },
+      "wine_entities": {
+        "description": "Main wine information table",
+        "mappings": [
+          {
+            "legacy_table": "WineItems",
+            "legacy_column": "WineItemID",
+            "new_table": "wines",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Primary key changed from int to uuid"
+          },
+          {
+            "legacy_table": "WineItems",
+            "legacy_column": "WineProducerID",
+            "new_table": "wines",
+            "new_column": "producer_id",
+            "data_type_change": "int → uuid",
+            "notes": "Foreign key relationship"
+          },
+          {
+            "legacy_table": "WineItems",
+            "legacy_column": "WineVarietalID",
+            "new_table": "wines",
+            "new_column": "varietal_id",
+            "data_type_change": "int → uuid",
+            "notes": "Foreign key relationship"
+          },
+          {
+            "legacy_table": "WineItems",
+            "legacy_column": "WineBrandID",
+            "new_table": "wines",
+            "new_column": "brand_id",
+            "data_type_change": "int → uuid",
+            "notes": "Foreign key relationship"
+          },
+          {
+            "legacy_table": "WineItems",
+            "legacy_column": "WineStyleID",
+            "new_table": "wines",
+            "new_column": "style_id",
+            "data_type_change": "int → uuid",
+            "notes": "Foreign key relationship"
+          },
+          {
+            "legacy_table": "WineItems",
+            "legacy_column": "WineSingleVineyardID",
+            "new_table": "wines",
+            "new_column": "vineyard_id",
+            "data_type_change": "int → uuid",
+            "notes": "Renamed and restructured"
+          },
+          {
+            "legacy_table": "WineItems",
+            "legacy_column": "WineVillageAvaID",
+            "new_table": "wines",
+            "new_column": "village_id",
+            "data_type_change": "int → uuid",
+            "notes": "Renamed and restructured"
+          },
+          {
+            "legacy_table": "WineItems",
+            "legacy_column": "WineCountryID",
+            "new_table": "wines",
+            "new_column": "country_id",
+            "data_type_change": "int → uuid",
+            "notes": "Foreign key relationship"
+          },
+          {
+            "legacy_table": "WineItems",
+            "legacy_column": "WineRegionID",
+            "new_table": "wines",
+            "new_column": "region_id",
+            "data_type_change": "int → uuid",
+            "notes": "Foreign key relationship"
+          }
+        ],
+        "unmapped_columns": [
+          {
+            "legacy_table": "WineItems",
+            "legacy_column": "WineColorID",
+            "notes": "Not migrated - simplified structure"
+          },
+          {
+            "legacy_table": "WineItems",
+            "legacy_column": "Approved",
+            "notes": "Not migrated - simplified structure"
+          }
+        ]
+      },
+      "wine_reference_tables": {
+        "description": "Wine classification and reference tables",
+        "mappings": [
+          {
+            "legacy_table": "WineProducers",
+            "legacy_column": "WineProducerID",
+            "new_table": "wine_producers",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Primary key changed from int to uuid"
+          },
+          {
+            "legacy_table": "WineProducers",
+            "legacy_column": "WineProducerName",
+            "new_table": "wine_producers",
+            "new_column": "name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Direct mapping"
+          },
+          {
+            "legacy_table": "WineVarietals",
+            "legacy_column": "WineVarietalID",
+            "new_table": "wine_varietals",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Primary key changed from int to uuid"
+          },
+          {
+            "legacy_table": "WineVarietals",
+            "legacy_column": "WineVarietalName",
+            "new_table": "wine_varietals",
+            "new_column": "name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Direct mapping"
+          },
+          {
+            "legacy_table": "WineBrands",
+            "legacy_column": "WineBrandID",
+            "new_table": "wine_brands",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Primary key changed from int to uuid"
+          },
+          {
+            "legacy_table": "WineBrands",
+            "legacy_column": "WineBrandName",
+            "new_table": "wine_brands",
+            "new_column": "name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Direct mapping"
+          },
+          {
+            "legacy_table": "WineStyles",
+            "legacy_column": "WineStyleID",
+            "new_table": "wine_styles",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Primary key changed from int to uuid"
+          },
+          {
+            "legacy_table": "WineStyles",
+            "legacy_column": "WineStyleName",
+            "new_table": "wine_styles",
+            "new_column": "name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Direct mapping"
+          },
+          {
+            "legacy_table": "WineCountries",
+            "legacy_column": "WineCountryID",
+            "new_table": "wine_countries",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Primary key changed from int to uuid"
+          },
+          {
+            "legacy_table": "WineCountries",
+            "legacy_column": "WineCountryName",
+            "new_table": "wine_countries",
+            "new_column": "name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Direct mapping"
+          },
+          {
+            "legacy_table": "WineRegions",
+            "legacy_column": "WineRegionID",
+            "new_table": "wine_regions",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Primary key changed from int to uuid"
+          },
+          {
+            "legacy_table": "WineRegions",
+            "legacy_column": "WineRegionName",
+            "new_table": "wine_regions",
+            "new_column": "name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Direct mapping"
+          },
+          {
+            "legacy_table": "WineVillageAvas",
+            "legacy_column": "WineVillageAvaID",
+            "new_table": "wine_villages",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Renamed and restructured"
+          },
+          {
+            "legacy_table": "WineVillageAvas",
+            "legacy_column": "WineVillageAvaName",
+            "new_table": "wine_villages",
+            "new_column": "name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Renamed and restructured"
+          },
+          {
+            "legacy_table": "WineSingleVineyards",
+            "legacy_column": "WineSingleVineyardID",
+            "new_table": "wine_vineyards",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Renamed and restructured"
+          },
+          {
+            "legacy_table": "WineSingleVineyards",
+            "legacy_column": "WineSingleVineyardName",
+            "new_table": "wine_vineyards",
+            "new_column": "name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Renamed and restructured"
+          }
+        ]
+      },
+      "bottle_and_vintage": {
+        "description": "Bottle size and vintage information",
+        "mappings": [
+          {
+            "legacy_table": "BottleSizes",
+            "legacy_column": "BottleSizeID",
+            "new_table": "wine_bottle_formats",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Renamed and restructured"
+          },
+          {
+            "legacy_table": "BottleSizes",
+            "legacy_column": "BottleSizeName",
+            "new_table": "wine_bottle_formats",
+            "new_column": "name",
+            "data_type_change": "varchar → character varying",
+            "notes": "Direct mapping"
+          },
+          {
+            "legacy_table": "Vintages",
+            "legacy_column": "VintageID",
+            "new_table": "wine_bottle_vintages",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Renamed and restructured"
+          },
+          {
+            "legacy_table": "Vintages",
+            "legacy_column": "VintageYear",
+            "new_table": "wine_bottle_vintages",
+            "new_column": "name",
+            "data_type_change": "int → character varying",
+            "notes": "Mapped to name field"
+          }
+        ]
+      },
+      "activities_to_operations": {
+        "description": "Activities table restructured to operations",
+        "mappings": [
+          {
+            "legacy_table": "Activities",
+            "legacy_column": "ActivityID",
+            "new_table": "cases_operations",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Major restructuring"
+          },
+          {
+            "legacy_table": "Activities",
+            "legacy_column": "AccountID",
+            "new_table": "cases_operations",
+            "new_column": "case_id",
+            "data_type_change": "int → uuid",
+            "notes": "Relationship restructured"
+          },
+          {
+            "legacy_table": "Activities",
+            "legacy_column": "TransactionType",
+            "new_table": "cases_operations",
+            "new_column": "type",
+            "data_type_change": "varchar → case_operation_type_enum",
+            "notes": "Mapped to enum"
+          },
+          {
+            "legacy_table": "Activities",
+            "legacy_column": "Status",
+            "new_table": "cases_operations",
+            "new_column": "status",
+            "data_type_change": "smallint → case_operation_status_enum",
+            "notes": "Mapped to enum"
+          },
+          {
+            "legacy_table": "Activities",
+            "legacy_column": "DateCreated",
+            "new_table": "cases_operations",
+            "new_column": "created_at",
+            "data_type_change": "datetime → timestamp with time zone",
+            "notes": "Standardized timestamp"
+          },
+          {
+            "legacy_table": "Activities",
+            "legacy_column": "DateUpdated",
+            "new_table": "cases_operations",
+            "new_column": "updated_at",
+            "data_type_change": "datetime → timestamp with time zone",
+            "notes": "Standardized timestamp"
+          }
+        ],
+        "unmapped_columns": [
+          {
+            "legacy_table": "Activities",
+            "legacy_column": "HandlingQty",
+            "notes": "Not migrated - simplified structure"
+          },
+          {
+            "legacy_table": "Activities",
+            "legacy_column": "HandlingPrice",
+            "notes": "Not migrated - simplified structure"
+          },
+          {
+            "legacy_table": "Activities",
+            "legacy_column": "ShippingQty",
+            "notes": "Not migrated - simplified structure"
+          },
+          {
+            "legacy_table": "Activities",
+            "legacy_column": "ShippingRate",
+            "notes": "Not migrated - simplified structure"
+          },
+          {
+            "legacy_table": "Activities",
+            "legacy_column": "ShippingTotal",
+            "notes": "Not migrated - simplified structure"
+          },
+          {
+            "legacy_table": "Activities",
+            "legacy_column": "ShippingDate",
+            "notes": "Not migrated - simplified structure"
+          }
+        ]
+      },
+      "activity_details_to_operation_extras": {
+        "description": "Activity details restructured to operation extras",
+        "mappings": [
+          {
+            "legacy_table": "ActivityDetails",
+            "legacy_column": "ActivityDetailID",
+            "new_table": "operation_extras",
+            "new_column": "id",
+            "data_type_change": "int → uuid",
+            "notes": "Major restructuring"
+          },
+          {
+            "legacy_table": "ActivityDetails",
+            "legacy_column": "ActivityID",
+            "new_table": "operation_extras",
+            "new_column": "operation_id",
+            "data_type_change": "int → uuid",
+            "notes": "Foreign key relationship"
+          },
+          {
+            "legacy_table": "ActivityDetails",
+            "legacy_column": "Quantity",
+            "new_table": "operation_extras",
+            "new_column": "amount",
+            "data_type_change": "int → numeric",
+            "notes": "Renamed for clarity"
+          },
+          {
+            "legacy_table": "ActivityDetails",
+            "legacy_column": "CaseID",
+            "new_table": "operation_extras",
+            "new_column": "case_id",
+            "data_type_change": "int → uuid",
+            "notes": "Foreign key relationship"
+          }
+        ],
+        "unmapped_columns": [
+          {
+            "legacy_table": "ActivityDetails",
+            "legacy_column": "WineItemID",
+            "notes": "Not directly migrated"
+          },
+          {
+            "legacy_table": "ActivityDetails",
+            "legacy_column": "VintageID",
+            "notes": "Not directly migrated"
+          },
+          {
+            "legacy_table": "ActivityDetails",
+            "legacy_column": "BottleSizeID",
+            "notes": "Not directly migrated"
+          }
+        ]
+      }
+    },
+    "new_tables": {
+      "description": "Tables that didn't exist in the legacy database",
+      "tables": [
+        {
+          "table_name": "tenants",
+          "description": "Multi-tenancy support",
+          "purpose": "Supports multiple organizations using the same system"
+        },
+        {
+          "table_name": "users_notifications",
+          "description": "User notification system",
+          "purpose": "Stores user notifications and their read status"
+        },
+        {
+          "table_name": "operation_extra_templates",
+          "description": "Templates for operation extras",
+          "purpose": "Reusable templates for operation extra charges"
+        },
+        {
+          "table_name": "operations_groups",
+          "description": "Grouping of operations",
+          "purpose": "Groups related operations together"
+        },
+        {
+          "table_name": "operations_requests",
+          "description": "Operation request system",
+          "purpose": "Manages requests for operations before execution"
+        },
+        {
+          "table_name": "wine_inventory_entries",
+          "description": "Wine inventory tracking",
+          "purpose": "Tracks wine inventory across cases and operations"
+        }
+      ]
+    },
+    "architectural_changes": {
+      "description": "Major changes in database architecture",
+      "changes": [
+        {
+          "change": "Multi-tenancy",
+          "description": "Added tenant_id to most tables",
+          "impact": "Supports multiple organizations using the same system"
+        },
+        {
+          "change": "UUID Primary Keys",
+          "description": "Changed from integer to UUID for all primary keys",
+          "impact": "Better distribution and security"
+        },
+        {
+          "change": "Soft Deletes",
+          "description": "Added deleted_at timestamp columns",
+          "impact": "Data preservation and audit trail"
+        },
+        {
+          "change": "Standardized Timestamps",
+          "description": "created_at and updated_at on all entities",
+          "impact": "Consistent audit trail across all tables"
+        },
+        {
+          "change": "Enum Types",
+          "description": "PostgreSQL enums for status and type fields",
+          "impact": "Data integrity and type safety"
+        },
+        {
+          "change": "JSONB Fields",
+          "description": "Added JSONB columns for flexible data storage",
+          "impact": "Flexible schema for complex data structures"
+        },
+        {
+          "change": "Simplified Structure",
+          "description": "Removed complex pricing and shipping logic",
+          "impact": "Cleaner, more maintainable codebase"
+        },
+        {
+          "change": "Role-based Access",
+          "description": "Array-based role system instead of single role",
+          "impact": "More flexible user permissions"
+        }
+      ]
+    },
+    "data_type_mappings": {
+      "description": "Data type conversions from SQL Server to PostgreSQL",
+      "mappings": [
+        {
+          "legacy_type": "int",
+          "new_type": "uuid",
+          "usage": "Primary keys"
+        },
+        {
+          "legacy_type": "int",
+          "new_type": "integer",
+          "usage": "Numeric fields"
+        },
+        {
+          "legacy_type": "varchar",
+          "new_type": "character varying",
+          "usage": "String fields"
+        },
+        {
+          "legacy_type": "datetime",
+          "new_type": "timestamp with time zone",
+          "usage": "Timestamp fields"
+        },
+        {
+          "legacy_type": "bit",
+          "new_type": "boolean",
+          "usage": "Boolean fields"
+        },
+        {
+          "legacy_type": "decimal",
+          "new_type": "numeric",
+          "usage": "Decimal fields"
+        },
+        {
+          "legacy_type": "smallint",
+          "new_type": "integer",
+          "usage": "Small integers"
+        }
+      ]
+    }
+  }
+}

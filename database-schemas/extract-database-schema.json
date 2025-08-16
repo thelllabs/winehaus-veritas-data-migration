@@ -1,0 +1,2878 @@
+{
+  "database_schema": [
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "AccountNumbers",
+      "columns": [
+        {
+          "COLUMN_NAME": "AccountNumberID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AccountNumber",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AccountID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateExpired",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "AccountPhones",
+      "columns": [
+        {
+          "COLUMN_NAME": "AccountPhoneID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "PhoneLabel",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "PhoneNumber",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AccountID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "Accounts",
+      "columns": [
+        {
+          "COLUMN_NAME": "AccountID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "UserID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AccountName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 200,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "FirstName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "LastName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Email",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "NormalPrice",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BreakVolume1",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BreakPrice1",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BreakVolume2",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BreakPrice2",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Notes",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 500,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "Activities",
+      "columns": [
+        {
+          "COLUMN_NAME": "ActivityID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AccountID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "TransactionType",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 2,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ToAddressID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ToAddressType",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 1,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "FromAddressID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "FromAddressType",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 1,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "HandlingQty",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "HandlingPrice",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Notes",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 1000,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ShippingMethodID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ShippingQty",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ShippingRate",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ShippingTotal",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ShippingDate",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Status",
+          "DATA_TYPE": "smallint",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "isTransfer",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "StagingNote",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 500,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "UserID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "CreatedByUserID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "ActivityDetails",
+      "columns": [
+        {
+          "COLUMN_NAME": "ActivityDetailID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ActivityID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineItemID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "SupplyID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Quantity",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ActivityType",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "CaseID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "CaseDetailID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "VintageID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BottleSizeID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "FromCaseLocationID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "FromLockerID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ToCaseLocationID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ToLockerID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "UserID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "ActivityStatuses",
+      "columns": [
+        {
+          "COLUMN_NAME": "ActivityStatusID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Status",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "StatusName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "SortOrder",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "Addresses",
+      "columns": [
+        {
+          "COLUMN_NAME": "AddressID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AddressName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AddressLine1",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AddressLine2",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "City",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "State",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 10,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ZipCode",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AddressType",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AccountID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "PreferredShipping",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": "((0))"
+        },
+        {
+          "COLUMN_NAME": "PreferredBilling",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": "((0))"
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "BottleSizes",
+      "columns": [
+        {
+          "COLUMN_NAME": "BottleSizeID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BottleSizeName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DisplayOrder",
+          "DATA_TYPE": "smallint",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "CaseDetails",
+      "columns": [
+        {
+          "COLUMN_NAME": "CaseDetailID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "CaseID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineItemID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineQuantity",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "VintageID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BottleSizeID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Notes",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 1000,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "UserID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "CaseLocations",
+      "columns": [
+        {
+          "COLUMN_NAME": "CaseLocationID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "CaseLocationName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "LockerID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "Cases",
+      "columns": [
+        {
+          "COLUMN_NAME": "CaseID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AccountID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "MaxQuantity",
+          "DATA_TYPE": "smallint",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "CaseNumber",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "CaseLocationID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "LockerID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "UserID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "isUsed",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "ContactPhones",
+      "columns": [
+        {
+          "COLUMN_NAME": "ContactPhoneID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "PhoneLabel",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "PhoneNumber",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ContactID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "Contacts",
+      "columns": [
+        {
+          "COLUMN_NAME": "ContactID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Title",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 40,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "FirstName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "LastName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Email",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ContactType",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 10,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AccountID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Preferred",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "DEP_ActivityDetailLogs",
+      "columns": [
+        {
+          "COLUMN_NAME": "ActivityDetailLogID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ActivityID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineItemID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Quantity",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineProducerID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineProducerName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineVarietalID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineVarietalName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineBrandID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineBrandName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineStyleID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineStyleName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineColorID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineColorName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineSingleVineyardID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineSingleVineyardName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineVillageAvaID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineVillageAvaName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineCountryID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineCountryName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineRegionID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineRegionName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "DEP_ActivityLogs",
+      "columns": [
+        {
+          "COLUMN_NAME": "ActivityLogID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ActivityID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AccountID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "TransactionType",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 2,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "FromAddressID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "FromAddressName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "FromAddressLine1",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "FromAddressLine2",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "FromCity",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "FromState",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 10,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "FromZipCode",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ShippingDate",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "DEP_CaseTypes",
+      "columns": [
+        {
+          "COLUMN_NAME": "CaseTypeID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "CaseTypeName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "NumberOfBottles",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "DEP_LockerDetails",
+      "columns": [
+        {
+          "COLUMN_NAME": "LockerDetailID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "LockerID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "CaseID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "DistributorPhones",
+      "columns": [
+        {
+          "COLUMN_NAME": "DistributorPhoneID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "PhoneLabel",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "PhoneNumber",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DistributorID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "Distributors",
+      "columns": [
+        {
+          "COLUMN_NAME": "DistributorID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DistributorName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Address",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Address2",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "City",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "State",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Zip",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "InvoiceDetails",
+      "columns": [
+        {
+          "COLUMN_NAME": "InvoiceDetailID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "InvoiceID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "MovementType",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 30,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ItemType",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 30,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ItemDescription",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 1000,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ItemDate",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Quantity",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Price",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "TotalPrice",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "UserID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateDeleted",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ActivityID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "InvoiceDetails_bck",
+      "columns": [
+        {
+          "COLUMN_NAME": "InvoiceDetailID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "InvoiceID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "MovementType",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 30,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ItemType",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 30,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ItemDescription",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 1000,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ItemDate",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Quantity",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Price",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "TotalPrice",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "UserID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateDeleted",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ActivityID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "Invoices",
+      "columns": [
+        {
+          "COLUMN_NAME": "InvoiceID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AccountID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "InvoiceStatus",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BillToName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BillToAddressLine1",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BillToAddressLine2",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BillToCity",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BillToState",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 10,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BillToZipCode",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "InvoiceDate",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DueDate",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "UserID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "Invoices_bck",
+      "columns": [
+        {
+          "COLUMN_NAME": "InvoiceID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AccountID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "InvoiceStatus",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BillToName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BillToAddressLine1",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BillToAddressLine2",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BillToCity",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BillToState",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 10,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BillToZipCode",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "InvoiceDate",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DueDate",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "UserID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "LockerHistory",
+      "columns": [
+        {
+          "COLUMN_NAME": "LockerHistoryID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "LockerID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AccountID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateStarted",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateEnded",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Rate",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "InventoryControl",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "UserID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "Lockers",
+      "columns": [
+        {
+          "COLUMN_NAME": "LockerID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "LockerNumber",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "InventoryControl",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Rate",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "AccountID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "isCustom",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "owinuserloginhistory",
+      "columns": [
+        {
+          "COLUMN_NAME": "Username",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateLogged",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "ShippingMethods",
+      "columns": [
+        {
+          "COLUMN_NAME": "ShippingMethodID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ShippingMethodName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DisplayOrder",
+          "DATA_TYPE": "smallint",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ShippingMinPrice",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "PricePerCase",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "isPortal",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "Supplies",
+      "columns": [
+        {
+          "COLUMN_NAME": "SupplyID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "SupplyName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DisplayOrder",
+          "DATA_TYPE": "smallint",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "SupplyPrice",
+          "DATA_TYPE": "decimal",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "UserLogs",
+      "columns": [
+        {
+          "COLUMN_NAME": "UserLogID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "UserID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateLogged",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "RemoteIPAddress",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "UserAgent",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 250,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "UserNameHistory",
+      "columns": [
+        {
+          "COLUMN_NAME": "UserNameHistoryID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "UserID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "UserName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 100,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "dte_start",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "dte_end",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "Users",
+      "columns": [
+        {
+          "COLUMN_NAME": "UserID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "FirstName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "LastName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Email",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Username",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Password",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Role",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 20,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "LastLogin",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "Vintages",
+      "columns": [
+        {
+          "COLUMN_NAME": "VintageID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "VintageYear",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "WineBrands",
+      "columns": [
+        {
+          "COLUMN_NAME": "WineBrandID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineBrandName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "WineColors",
+      "columns": [
+        {
+          "COLUMN_NAME": "WineColorID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineColorName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "WineCountries",
+      "columns": [
+        {
+          "COLUMN_NAME": "WineCountryID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineCountryName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "WineCountryRegionVillageAvas",
+      "columns": [
+        {
+          "COLUMN_NAME": "WineCountryRegionVillageAvaID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineCountryID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineRegionID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineVillageAvaID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "WineItems",
+      "columns": [
+        {
+          "COLUMN_NAME": "WineItemID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineProducerID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineVarietalID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineBrandID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineStyleID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineColorID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineSingleVineyardID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineVillageAvaID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "CreatedBy",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineCountryID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineRegionID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "Approved",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": "((0))"
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "WineProducerBrands",
+      "columns": [
+        {
+          "COLUMN_NAME": "WineProducerBrandID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ProducerID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "BrandID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "WineProducers",
+      "columns": [
+        {
+          "COLUMN_NAME": "WineProducerID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineProducerName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "WineProducerSingleVineyards",
+      "columns": [
+        {
+          "COLUMN_NAME": "WineProducerSingleVineyardID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "ProducerID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "SingleVineyardID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "WineRegions",
+      "columns": [
+        {
+          "COLUMN_NAME": "WineRegionID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineRegionName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "WineSingleVineyards",
+      "columns": [
+        {
+          "COLUMN_NAME": "WineSingleVineyardID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineSingleVineyardName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "WineStyles",
+      "columns": [
+        {
+          "COLUMN_NAME": "WineStyleID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineStyleName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "WineVarietals",
+      "columns": [
+        {
+          "COLUMN_NAME": "WineVarietalID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineVarietalName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    },
+    {
+      "TABLE_SCHEMA": "dbo",
+      "TABLE_NAME": "WineVillageAvas",
+      "columns": [
+        {
+          "COLUMN_NAME": "WineVillageAvaID",
+          "DATA_TYPE": "int",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "WineVillageAvaName",
+          "DATA_TYPE": "varchar",
+          "CHARACTER_MAXIMUM_LENGTH": 50,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "IsActive",
+          "DATA_TYPE": "bit",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateCreated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        },
+        {
+          "COLUMN_NAME": "DateUpdated",
+          "DATA_TYPE": "datetime",
+          "CHARACTER_MAXIMUM_LENGTH": null,
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null
+        }
+      ]
+    }
+  ]
+}

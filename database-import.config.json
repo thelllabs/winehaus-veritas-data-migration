@@ -1,0 +1,12 @@
+{
+  "server": "127.0.0.1",
+  "database": "winehaus",
+  "user": "postgres",
+  "password": "postgres",
+  "port": 5432,
+  "options": {
+    "encrypt": false,
+    "trustServerCertificate": true,
+    "enableArithAbort": true
+  }
+}

@@ -1,0 +1,1541 @@
+{
+  "database_schema": [
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "user_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "address_line_1",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "address_line_2",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "city",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "state",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "postal_code",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "country",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "notes",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "jsonb",
+          "COLUMN_NAME": "location",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "addresses",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "description",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "billing_start_date",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "billing_end_date",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "customer_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "integer",
+          "COLUMN_NAME": "max_items",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "0",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "integer",
+          "COLUMN_NAME": "current_items",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "0",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "cases",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "case_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "case_operation_type_enum",
+          "COLUMN_NAME": "type",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "case_operation_status_enum",
+          "COLUMN_NAME": "status",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "jsonb",
+          "COLUMN_NAME": "logs",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "'[]'::jsonb",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "request_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "boolean",
+          "COLUMN_NAME": "synced_inventory",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "false",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "boolean",
+          "COLUMN_NAME": "reverted_on_inventory",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "false",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "group_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "cases_operations",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "integer",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "nextval('migrations_id_seq'::regclass)",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "bigint",
+          "COLUMN_NAME": "timestamp",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "migrations",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "invoice_title",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "description",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "numeric",
+          "COLUMN_NAME": "price_per_item",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "'0'::numeric",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "operation_extra_templates",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "operation_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "operation_group_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "invoice_title",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "description",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "numeric",
+          "COLUMN_NAME": "price_per_item",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "'0'::numeric",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "numeric",
+          "COLUMN_NAME": "amount",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "'0'::numeric",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "template_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "operation_extras",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "customer_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "operation_group_status_enum",
+          "COLUMN_NAME": "status",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "operations_groups",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "customer_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "operation_request_type_enum",
+          "COLUMN_NAME": "type",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "operation_request_status_enum",
+          "COLUMN_NAME": "status",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "jsonb",
+          "COLUMN_NAME": "extra_data",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "reason",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "jsonb",
+          "COLUMN_NAME": "phones",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "'[]'::jsonb",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "requester_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "operations_requests",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "document_number",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "tenants",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "email",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "password",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "reset_password_token",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "first_name",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "last_name",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "tenant_user_role_enum[]",
+          "COLUMN_NAME": "roles",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "'{}'::tenant_user_role_enum[]",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "tenant_user_status_enum",
+          "COLUMN_NAME": "status",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "jsonb",
+          "COLUMN_NAME": "phones",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "'[]'::jsonb",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "notes",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "legacy_user_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "users",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "user_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "user_notification_type_enum",
+          "COLUMN_NAME": "type",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "jsonb",
+          "COLUMN_NAME": "data",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "'{}'::jsonb",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "boolean",
+          "COLUMN_NAME": "read",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "false",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "users_notifications",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "wine_bottle_formats",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "wine_bottle_vintages",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "wine_brands",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "wine_countries",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "case_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "operation_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "operation_request_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "wine_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "bottle_format_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "bottle_vintage_id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "integer",
+          "COLUMN_NAME": "amount",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "0",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "wine_inventory_entries",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "wine_producers",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "wine_regions",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "wine_styles",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "wine_types",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "wine_varietals",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "wine_villages",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "name",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "wine_vineyards",
+      "TABLE_SCHEMA": "public"
+    },
+    {
+      "columns": [
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "id",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "uuid_generate_v4()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "created_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "updated_at",
+          "IS_NULLABLE": "NO",
+          "COLUMN_DEFAULT": "now()",
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "tenant_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "timestamp with time zone",
+          "COLUMN_NAME": "deleted_at",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "character varying",
+          "COLUMN_NAME": "description",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "brand_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "producer_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "style_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "type_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "varietal_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "village_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "vineyard_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "country_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        },
+        {
+          "DATA_TYPE": "uuid",
+          "COLUMN_NAME": "region_id",
+          "IS_NULLABLE": "YES",
+          "COLUMN_DEFAULT": null,
+          "CHARACTER_MAXIMUM_LENGTH": null
+        }
+      ],
+      "TABLE_NAME": "wines",
+      "TABLE_SCHEMA": "public"
+    }
+  ]
+}

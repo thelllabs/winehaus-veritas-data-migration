@@ -1,0 +1,51 @@
+{
+  "name": "veritas-data-migration",
+  "version": "1.0.0",
+  "description": "Data migration scripts for Veritas wine database",
+  "main": "scripts/import-wine-data.js",
+  "scripts": {
+    "add-legacy-columns": "node scripts/add-legacy-id-columns.js",
+    "wine:extract": "node scripts/extract-wine-data.js",
+    "wine:import": "node scripts/import-wine-data.js",
+    "user:extract": "node scripts/extract-user-data.js",
+    "user:import": "node scripts/import-user-data.js --clear-existing",
+    "user:test": "node scripts/test-user-extraction.js",
+    "case:extract": "node scripts/extract-case-data.js",
+    "case:import": "node scripts/import-case-data.js --clear-existing",
+    "case:test": "node scripts/extract-case-data.js --help",
+    "addresses:parse": "node scripts/parse-addresses-final.js"
+  },
+  "keywords": [
+    "wine",
+    "database",
+    "migration",
+    "veritas",
+    "postgres"
+  ],
+  "author": "Veritas Team",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "commander": "^14.0.0",
+    "dotenv": "^16.3.1",
+    "mssql": "^11.0.1",
+    "pg": "^8.11.3",
+    "typeorm": "^0.3.17",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "@types/uuid": "^9.0.6"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/veritas/wine-data-migration.git"
+  },
+  "bugs": {
+    "url": "https://github.com/veritas/wine-data-migration/issues"
+  },
+  "homepage": "https://github.com/veritas/wine-data-migration#readme"
+}

@@ -1,0 +1,12 @@
+{
+  "server": "91.246.57.217",
+  "database": "Chelsea",
+  "user": "partnerprogrammer",
+  "password": "4jbJNKJj3EzwtMzRsmdY",
+  "port": 1433,
+  "options": {
+    "encrypt": false,
+    "trustServerCertificate": true,
+    "enableArithAbort": true
+  }
+}
