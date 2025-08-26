@@ -19,7 +19,7 @@ class LegacyIdColumnAdder {
     const tables = [
       'wine_countries', 'wine_regions', 'wine_villages', 'wine_producers',
       'wine_brands', 'wine_varietals', 'wine_styles', 'wine_types',
-      'wine_bottle_vintages', 'wine_bottle_formats', 'wines'
+      'wine_bottle_vintages', 'wine_bottle_formats', 'wines', 'cases'
     ];
 
     for (const table of tables) {

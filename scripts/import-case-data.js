@@ -283,8 +283,8 @@ class LegacyCaseDataSeeder {
     for (const caseData of this.legacyData.cases) {
       // Check if case already exists by description (contains legacy case ID)
       const existing = await this.dataSource.query(
-        "SELECT id FROM cases WHERE description LIKE $1",
-        [`%Legacy case: ${caseData.legacy_case_id}.%`]
+        "SELECT id FROM cases WHERE legacy_id = $1",
+        [caseData.legacy_case_id.toString()]
       );
 
       if (existing.length === 0) {
@@ -361,8 +361,8 @@ class LegacyCaseDataSeeder {
           `INSERT INTO cases (
             id, tenant_id, customer_id, name, description, billing_start_date, 
             billing_end_date, max_items, current_items, created_at, updated_at, 
-            deleted_at
-          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+            deleted_at, legacy_id
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
           [
             caseId,
             this.defaultTenantId,
@@ -376,6 +376,7 @@ class LegacyCaseDataSeeder {
             new Date(caseData.created_at || Date.now()),
             new Date(caseData.updated_at || Date.now()),
             null, // deleted_at - soft delete if inactive
+            caseData.legacy_case_id.toString()
           ]
         );
 
@@ -571,7 +572,7 @@ class LegacyCaseDataSeeder {
       );
 
     } catch (error) {
-      console.log({ error, activityDetail });
+      console.log({ error, activityDetail, newWineId, newBottleFormatId, newBottleVintageId });
       console.log(teste);
       return;
     }
@@ -1230,8 +1231,40 @@ class LegacyCaseDataSeeder {
     }
   }
 
+  async getCustomerIdMap() {
+    const customerIdMap = new Map();
+    // Query database for all customers
+    const customers = await this.dataSource.query(
+      `SELECT id, legacy_user_id FROM users WHERE tenant_id = $1`,
+      [this.defaultTenantId]
+    );
+    
+    // Map legacy account id to customer id
+    customers.forEach((customer) => {
+      customerIdMap.set(customer.legacy_user_id, customer.id);
+    });
+    return customerIdMap;
+  }
+
+  async getCaseIdMap() {
+    const caseIdMap = new Map();
+    // Query database for all cases
+    const cases = await this.dataSource.query(
+      `SELECT id, legacy_id FROM cases WHERE tenant_id = $1`,
+      [this.defaultTenantId]
+    );
+    // Map legacy case id to case id
+    cases.forEach((c) => {
+      caseIdMap.set(c.legacy_id, c.id);
+    });
+
+    return caseIdMap;
+  }
+
   async seedOperationGroups() {
     console.log("🔄 Seeding operation groups...");
+    this.customerIdMap = await this.getCustomerIdMap();
+    this.caseIdMap = await this.getCaseIdMap();
 
     if (!this.customerIdMap || !this.legacyData.activities) {
       console.log(
@@ -1243,17 +1276,19 @@ class LegacyCaseDataSeeder {
     let inserted = 0;
     let skipped = 0;
 
-    const customers = new Map(
-      [...this.customerIdMap].filter(
-        ([legacyAccountId, customerId]) => legacyAccountId == 1084096
-      )
-    );
-    
+    const filterByAccountId = null;
+    // const filterByAccountId = 1084096;
 
-    console.log({ customers });
+    if (filterByAccountId) {
+      this.customerIdMap = new Map(
+        [...this.customerIdMap].filter(
+          ([legacyAccountId, customerId]) => legacyAccountId == filterByAccountId
+        )
+      );
+    }
 
     // Create operation groups for each customer based on their activities
-    for (const [legacyAccountId, customerId] of customers) {
+    for (const [legacyAccountId, customerId] of this.customerIdMap) {
       // Get all activities for this legacy account ID
       const customerActivities = this.getCustomerActivities(legacyAccountId);
       if (customerActivities.length === 0) {
