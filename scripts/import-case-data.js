@@ -54,9 +54,14 @@ const { v4: uuidv4 } = require("uuid");
 const { config } = require("dotenv");
 const fs = require("fs");
 const path = require("path");
+const { createDefaultTenant } = require("./utils/tenant-utils");
+const { DatabaseConfig, parseConfigPath } = require("./utils/database-config");
+
+const synced_inventory_status = true;
 
 // Load environment variables
 config();
+
 
 // Parse command line arguments
 function parseArguments() {
@@ -145,7 +150,7 @@ class LegacyCaseDataSeeder {
       await this.loadExtractedData();
 
       // Create default tenant
-      await this.createDefaultTenant();
+      this.defaultTenantId = await createDefaultTenant(this.dataSource);
 
       // Clear existing data if requested
       if (options.clearExisting) {
@@ -155,6 +160,9 @@ class LegacyCaseDataSeeder {
       // Seed data in dependency order
       await this.seedCases();
       await this.seedOperationGroups();
+      
+      // Seed wine inventory entries from case details
+      await this.seedWineInventoryEntriesFromCaseDetails();
 
       console.log("✅ Legacy case data seeding completed successfully!");
     } catch (error) {
@@ -246,28 +254,6 @@ class LegacyCaseDataSeeder {
     return JSON.parse(content);
   }
 
-  async createDefaultTenant() {
-    console.log("🏢 Creating default tenant...");
-
-    // Check if default tenant exists
-    const existingTenant = await this.dataSource.query(
-      "SELECT id FROM tenants WHERE name = $1",
-      ["Veritas"]
-    );
-
-    if (existingTenant.length === 0) {
-      const tenantId = uuidv4();
-      await this.dataSource.query(
-        "INSERT INTO tenants (id, name, document_number, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)",
-        [tenantId, "Veritas", "VERITAS-001", new Date(), new Date()]
-      );
-      console.log("✅ Created default tenant");
-      this.defaultTenantId = tenantId;
-    } else {
-      console.log("✅ Using existing default tenant");
-      this.defaultTenantId = existingTenant[0].id;
-    }
-  }
 
   async seedCases() {
     console.log("📦 Seeding cases...");
@@ -281,7 +267,7 @@ class LegacyCaseDataSeeder {
     let userNotImported = 0;
 
     for (const caseData of this.legacyData.cases) {
-      // Check if case already exists by description (contains legacy case ID)
+      // Check if case already exists
       const existing = await this.dataSource.query(
         "SELECT id FROM cases WHERE legacy_id = $1",
         [caseData.legacy_case_id.toString()]
@@ -345,13 +331,15 @@ class LegacyCaseDataSeeder {
 
         // Determine case name
         let caseName = `#${caseData.CaseNumber}`;
+
+        let caseLocation = null
         if (caseData.legacy_case_location_id) {
           const location = this.legacyData.caseLocations.find(
             (loc) =>
               loc.legacy_case_location_id === caseData.legacy_case_location_id
           );
-          if (location) {
-            caseName += ` - ${location.CaseLocationName}`;
+          if (location) {            
+            caseLocation = location.CaseLocationName;
           }
         }
 
@@ -359,7 +347,7 @@ class LegacyCaseDataSeeder {
         const caseId = uuidv4();
         await this.dataSource.query(
           `INSERT INTO cases (
-            id, tenant_id, customer_id, name, description, billing_start_date, 
+            id, tenant_id, customer_id, name, location, description, billing_start_date, 
             billing_end_date, max_items, current_items, created_at, updated_at, 
             deleted_at, legacy_id
           ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
@@ -368,10 +356,11 @@ class LegacyCaseDataSeeder {
             this.defaultTenantId,
             customerId,
             caseName,
-            `Legacy case: ${caseData.legacy_case_id}. Active: ${caseData.is_active}. Used: ${caseData.is_used}`,
+            caseLocation,
+            `Legacy Case ID: ${caseData.legacy_case_id}. Legacy Case Status: ${caseData.is_active}.`,
             new Date(caseData.created_at || Date.now()),
             caseData.is_active === "false" ? new Date() : null, // billing_end_date - set to null for legacy cases
-            999999,
+            caseData.max_quantity,
             0, // current_items - start with 0, will be calculated from operations
             new Date(caseData.created_at || Date.now()),
             new Date(caseData.updated_at || Date.now()),
@@ -640,7 +629,7 @@ class LegacyCaseDataSeeder {
         this.parseActivityStatus(activity.Status), // Default status for legacy cases
         JSON.stringify([]),
         null, // request_id - assume null for legacy cases
-        false, // synced_inventory - assume true for legacy cases
+        synced_inventory_status, // synced_inventory - assume true for legacy cases
         false, // reverted_on_inventory - assume false for legacy cases
         operationGroupId,
         new Date(activity.DateCreated || Date.now()),
@@ -708,7 +697,7 @@ class LegacyCaseDataSeeder {
         this.parseActivityStatus(activity.Status), // Default status for legacy cases
         JSON.stringify([]),
         null, // request_id - assume null for legacy cases
-        false, // synced_inventory - assume true for legacy cases
+        synced_inventory_status, // synced_inventory - assume true for legacy cases
         false, // reverted_on_inventory - assume false for legacy cases
         operationGroupId,
         new Date(activity.DateCreated || Date.now()),
@@ -1133,6 +1122,114 @@ class LegacyCaseDataSeeder {
     return wineInventoryEntryId;
   }
 
+  /**
+   * Seed wine inventory entries from case details data
+   * This function creates initial inventory entries based on case details
+   */
+  async seedWineInventoryEntriesFromCaseDetails() {
+    console.log("🍷 Seeding wine inventory entries from case details...");
+
+    this.customerIdMap = await this.getCustomerIdMap();
+    this.caseIdMap = await this.getCaseIdMap();
+    this.wineMapId = await this.getWineIdMap();
+    this.bottleFormatMapId = await this.getBottleFormatIdMap();
+    this.bottleVintageMapId = await this.getBottleVintageIdMap();
+
+
+    if (!this.legacyData.caseDetails || this.legacyData.caseDetails.length === 0) {
+      console.log("⚠️ No case details found, skipping wine inventory seeding");
+      return;
+    }
+
+    // Delete all wine inventory entries related to cases
+    await this.dataSource.query(`
+      DELETE FROM wine_inventory_entries WHERE tenant_id = $1 AND operation_id IS NULL
+    `, [this.defaultTenantId]);
+
+    let inserted = 0;
+    let skipped = 0;
+
+    for (const caseDetail of this.legacyData.caseDetails) {
+      try {
+        // Skip if no wine item ID
+        if (!caseDetail.legacy_wine_item_id) {
+          console.log(`⚠️ No wine item ID found for case detail ${caseDetail.legacy_case_detail_id}, skipping`);
+          skipped++;
+          continue;
+        }
+
+        // Get the new wine ID
+        const newWineId = await this.getNewWineId(caseDetail.legacy_wine_item_id);
+        if (!newWineId) {
+          console.log(`⚠️ No wine found for legacy_wine_item_id ${caseDetail.legacy_wine_item_id}, skipping`);
+          skipped++;
+          continue;
+        }
+
+        // Get the new bottle format ID
+        const newBottleFormatId = await this.getNewBottleFormatId(caseDetail.legacy_bottle_size_id);
+        if (!newBottleFormatId) {
+          console.log(`⚠️ No bottle format found for legacy_bottle_size_id ${caseDetail.legacy_bottle_size_id}, skipping`);
+          skipped++;
+          continue;
+        }
+
+        // Get the new bottle vintage ID
+        const newBottleVintageId = await this.getNewBottleVintageId(caseDetail.legacy_vintage_id);
+        if (!newBottleVintageId) {
+          console.log(`⚠️ No bottle vintage found for legacy_vintage_id ${caseDetail.legacy_vintage_id}, skipping`);
+          skipped++;
+          continue;
+        }
+        
+       // Skip if caseDetail.WineQuantity is not greater than 0
+       if (caseDetail.WineQuantity <= 0) {
+        console.log(`⚠️ Wine quantity is not greater than 0 for case detail ${caseDetail.legacy_case_detail_id}, skipping`);
+        skipped++;
+        continue;
+       }
+
+       // Check if case does not exist
+       if (!caseDetail.legacy_case_id) {
+        console.log(`⚠️ No legacy_case_id found for case detail ${caseDetail.legacy_case_detail_id}, skipping`);
+        skipped++;
+        continue;
+       }
+
+       const newCaseId = this.caseIdMap.get(caseDetail.legacy_case_id.toString());
+       if (!newCaseId) {
+        console.log(`⚠️ Case does not exist for case detail ${caseDetail.legacy_case_detail_id}, skipping`);
+        skipped++;
+        continue;
+       }
+       
+
+        await this.dataSource.query(
+          `INSERT INTO wine_inventory_entries (
+            id, tenant_id, wine_id, bottle_format_id, bottle_vintage_id, 
+            amount, created_at, updated_at, case_id
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+          [
+            uuidv4(),
+            this.defaultTenantId,
+            newWineId,
+            newBottleFormatId,
+            newBottleVintageId,
+            caseDetail.WineQuantity || 0,
+            new Date(caseDetail.created_at || Date.now()),
+            new Date(caseDetail.updated_at || Date.now()),
+            newCaseId
+          ]
+        );
+        inserted++;        
+      } catch (error) {
+        console.error(`❌ Error processing case detail ${caseDetail.legacy_case_detail_id}:`, error);
+        skipped++;
+      }
+    }
+    console.log(`✅ Wine inventory entries: ${inserted} inserted, ${skipped} skipped`);
+  }
+
   getInventoryActivityDetails(activity) {
     return this.legacyData.activityDetails.filter(
       (detail) =>
@@ -1261,6 +1358,42 @@ class LegacyCaseDataSeeder {
     return caseIdMap;
   }
 
+  async getWineIdMap() {
+    const wineIdMap = new Map();
+    const wines = await this.dataSource.query(
+      `SELECT id, legacy_id FROM wines WHERE tenant_id = $1`,
+      [this.defaultTenantId]
+    );
+    wines.forEach((w) => {
+      wineIdMap.set(w.legacy_id, w.id);
+    });
+    return wineIdMap;
+  }
+
+  async getBottleVintageIdMap() {
+    const bottleVintageIdMap = new Map();
+    const bottleVintages = await this.dataSource.query(
+      `SELECT id, legacy_id FROM wine_bottle_vintages WHERE tenant_id = $1`,
+      [this.defaultTenantId]
+    );
+    bottleVintages.forEach((b) => {
+      bottleVintageIdMap.set(b.legacy_id, b.id);
+    });
+    return bottleVintageIdMap;
+  }
+
+  async getBottleFormatIdMap() {
+    const bottleFormatIdMap = new Map();
+    const bottleFormats = await this.dataSource.query(
+      `SELECT id, legacy_id FROM wine_bottle_formats WHERE tenant_id = $1`,
+      [this.defaultTenantId]
+    );
+    bottleFormats.forEach((b) => {
+      bottleFormatIdMap.set(b.legacy_id, b.id);
+    });
+    return bottleFormatIdMap;
+  }
+
   async seedOperationGroups() {
     console.log("🔄 Seeding operation groups...");
     this.customerIdMap = await this.getCustomerIdMap();
@@ -1315,6 +1448,7 @@ async function bootstrap() {
 
   // Parse command line arguments
   const options = parseArguments();
+  const configPath = parseConfigPath();
 
   if (options.help) {
     showHelp();
@@ -1328,17 +1462,12 @@ async function bootstrap() {
   let dataSource = null;
 
   try {
+    // Load database configuration
+    const dbConfig = new DatabaseConfig(configPath);
+    dbConfig.validate();
+    
     // Create database connection
-    dataSource = new DataSource({
-      type: "postgres",
-      host: process.env.DB_HOST || "localhost",
-      port: parseInt(process.env.DB_PORT || "5432"),
-      username: process.env.DB_USERNAME || "postgres",
-      password: process.env.DB_PASSWORD || "postgres",
-      database: process.env.DB_DATABASE || "winehaus",
-      synchronize: false,
-      logging: false,
-    });
+    dataSource = new DataSource(dbConfig.getConnectionConfig());
 
     // Initialize connection
     await dataSource.initialize();

@@ -27,9 +27,13 @@ const { config } = require('dotenv');
 const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcrypt');
+const { parsePhoneNumber, isValidPhoneNumber } = require('libphonenumber-js');
+const { createDefaultTenant } = require('./utils/tenant-utils');
+const { DatabaseConfig, parseConfigPath } = require('./utils/database-config');
 
 // Load environment variables
 config();
+
 
 class LegacyUserDataSeeder {
   constructor(dataSource) {
@@ -44,7 +48,7 @@ class LegacyUserDataSeeder {
       await this.loadExtractedData();
       
       // Create default tenant
-      await this.createDefaultTenant();
+      this.defaultTenantId = await createDefaultTenant(this.dataSource);
       
       console.log({options});
       // Clear existing data if requested
@@ -73,7 +77,7 @@ class LegacyUserDataSeeder {
     await this.dataSource.query('DELETE FROM operations_requests WHERE tenant_id = $1', [this.defaultTenantId]);
     await this.dataSource.query('DELETE FROM operations_groups WHERE tenant_id = $1', [this.defaultTenantId]);
     await this.dataSource.query('DELETE FROM cases WHERE tenant_id = $1', [this.defaultTenantId]);
-    await this.dataSource.query('DELETE FROM addresses WHERE user_id IN (SELECT id FROM users WHERE tenant_id = $1) AND tenant_id = $1', [this.defaultTenantId, this.defaultTenantId]);
+    await this.dataSource.query('DELETE FROM addresses WHERE user_id IN (SELECT id FROM users WHERE tenant_id = $1) AND tenant_id = $1', [this.defaultTenantId]);
     await this.dataSource.query('DELETE FROM users WHERE legacy_user_id IS NOT NULL AND tenant_id = $1', [this.defaultTenantId]);
     
     console.log('✅ Existing tenant user data cleared');
@@ -112,28 +116,6 @@ class LegacyUserDataSeeder {
     return JSON.parse(content);
   }
 
-  async createDefaultTenant() {
-    console.log('🏢 Creating default tenant...');
-    
-    // Check if default tenant exists
-    const existingTenant = await this.dataSource.query(
-      'SELECT id FROM tenants WHERE name = $1',
-      ['Veritas']
-    );
-    
-    if (existingTenant.length === 0) {
-      const tenantId = uuidv4();
-      await this.dataSource.query(
-        'INSERT INTO tenants (id, name, document_number, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)',
-        [tenantId, 'Veritas', 'VERITAS-001', new Date(), new Date()]
-      );
-      console.log('✅ Created default tenant');
-      this.defaultTenantId = tenantId;
-    } else {
-      console.log('✅ Using existing default tenant');
-      this.defaultTenantId = existingTenant[0].id;
-    }
-  }
 
   async seedUsers() {
     console.log('👥 Seeding users...');
@@ -365,13 +347,22 @@ class LegacyUserDataSeeder {
     );
     
     // Combine and format phones according to NestJS interface: { type: PhoneType, number: string }
+    // Only add valid phone numbers
     [...accountPhones, ...contactPhones].forEach(phone => {
       if (phone.PhoneNumber) {
-        const phoneType = this.mapPhoneLabelToType(phone.PhoneLabel);
-        phones.push({
-          type: this.validatePhoneType(phoneType),
-          number: phone.PhoneNumber
-        });
+        const parsedNumber = this.parsePhoneNumber(phone.PhoneNumber);
+        
+        // Only add the phone if it's valid (parsePhoneNumber returns null for invalid numbers)
+        if (parsedNumber) {
+          const phoneType = this.mapPhoneLabelToType(phone.PhoneLabel);
+          phones.push({
+            type: this.validatePhoneType(phoneType),
+            number: parsedNumber
+          });
+        } else {
+          // Log invalid phone numbers for debugging (optional)
+          console.warn(`⚠️ Skipping invalid phone number for user ${legacyUserId}: "${phone.PhoneNumber}" (${phone.PhoneLabel || 'unknown'})`);
+        }
       }
     });
     
@@ -397,17 +388,73 @@ class LegacyUserDataSeeder {
     );
     
     // Combine and format phones according to NestJS interface: { type: PhoneType, number: string }
+    // Only add valid phone numbers
     [...accountPhones, ...contactPhones].forEach(phone => {
       if (phone.PhoneNumber) {
-        const phoneType = this.mapPhoneLabelToType(phone.PhoneLabel);
-        phones.push({
-          type: this.validatePhoneType(phoneType),
-          number: phone.PhoneNumber
-        });
+        const parsedNumber = this.parsePhoneNumber(phone.PhoneNumber);
+        
+        // Only add the phone if it's valid (parsePhoneNumber returns null for invalid numbers)
+        if (parsedNumber) {
+          const phoneType = this.mapPhoneLabelToType(phone.PhoneLabel);
+          phones.push({
+            type: this.validatePhoneType(phoneType),
+            number: parsedNumber
+          });
+        } else {
+          // Log invalid phone numbers for debugging (optional)
+          console.warn(`⚠️ Skipping invalid phone number for account ${legacyAccountId}: "${phone.PhoneNumber}" (${phone.PhoneLabel || 'unknown'})`);
+        }
       }
     });
     
     return phones;
+  }
+
+  parsePhoneNumber(phoneNumber) {
+    if (!phoneNumber || typeof phoneNumber !== 'string') {
+      return null;
+    }
+
+    // Clean the input by removing common formatting characters but keep + for international
+    const cleanedNumber = phoneNumber.trim();
+    
+    if (!cleanedNumber) {
+      return null;
+    }
+
+    try {
+      // Extract only digits for pattern matching
+      const digitsOnly = cleanedNumber.replace(/[^\d]/g, '');
+      
+      // First, try to parse as US number (with various formats)
+      let usNumber = cleanedNumber;
+      
+      // If it looks like a US number without country code (10 digits starting with 2-9)
+      if (/^[2-9]\d{9}$/.test(digitsOnly)) {
+        usNumber = '+1' + digitsOnly;
+      } 
+      // If it looks like a US number with country code (11 digits starting with 1)
+      else if (/^1[2-9]\d{9}$/.test(digitsOnly)) {
+        usNumber = '+' + digitsOnly;
+      }
+      
+      if (isValidPhoneNumber(usNumber, 'US')) {
+        const parsed = parsePhoneNumber(usNumber, 'US');
+        return parsed.number; // Return full international format
+      }
+
+      // If US parsing fails, try international parsing
+      if (isValidPhoneNumber(cleanedNumber)) {
+        const parsed = parsePhoneNumber(cleanedNumber);
+        return parsed.number; // Return full international format
+      }
+
+      // If both fail, return null
+      return null;
+    } catch (error) {
+      // If parsing throws an error, return null
+      return null;
+    }
   }
 
   // Map legacy PhoneLabel to PhoneType enum values
@@ -588,6 +635,8 @@ async function bootstrap() {
   
   // Parse command line arguments
   const clearExisting = process.argv.includes('--clear-existing');
+  const configPath = parseConfigPath();
+  
   if (clearExisting) {
     console.log('🧹 Clear existing data mode enabled');
   }
@@ -595,17 +644,12 @@ async function bootstrap() {
   let dataSource = null;
   
   try {
+    // Load database configuration
+    const dbConfig = new DatabaseConfig(configPath);
+    dbConfig.validate();
+    
     // Create database connection
-    dataSource = new DataSource({
-      type: 'postgres',
-      host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT || '5432'),
-      username: process.env.DB_USERNAME || 'postgres',
-      password: process.env.DB_PASSWORD || 'postgres',
-      database: process.env.DB_DATABASE || 'winehaus',
-      synchronize: false,
-      logging: false
-    });
+    dataSource = new DataSource(dbConfig.getConnectionConfig());
 
     // Initialize connection
     await dataSource.initialize();

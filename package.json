@@ -11,7 +11,7 @@
     "user:import": "node scripts/import-user-data.js --clear-existing",
     "user:test": "node scripts/test-user-extraction.js",
     "case:extract": "node scripts/extract-case-data.js",
-    "case:import": "node scripts/import-case-data.js --clear-existing",
+    "case:import": "node scripts/import-case-data.js",
     "case:test": "node scripts/extract-case-data.js --help",
     "addresses:parse": "node scripts/parse-addresses-final.js"
   },
@@ -28,6 +28,7 @@
     "bcrypt": "^6.0.0",
     "commander": "^14.0.0",
     "dotenv": "^16.3.1",
+    "libphonenumber-js": "^1.10.44",
     "mssql": "^11.0.1",
     "pg": "^8.11.3",
     "typeorm": "^0.3.17",

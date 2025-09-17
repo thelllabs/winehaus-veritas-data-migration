@@ -9,9 +9,12 @@ const { v4: uuidv4 } = require("uuid");
 const { config } = require("dotenv");
 const fs = require("fs");
 const path = require("path");
+const { createDefaultTenant } = require("./utils/tenant-utils");
+const { DatabaseConfig, parseConfigPath } = require("./utils/database-config");
 
 // Load environment variables
 config();
+
 
 class LegacyDataSeeder {
   constructor(dataSource) {
@@ -26,7 +29,7 @@ class LegacyDataSeeder {
       await this.loadExtractedData();
 
       // Create default tenant
-      await this.createDefaultTenant();
+      this.defaultTenantId = await createDefaultTenant(this.dataSource);
 
       await this.clearExistingData();
 
@@ -53,7 +56,9 @@ class LegacyDataSeeder {
   async clearExistingData() {
     console.log("🧹 Clearing existing data for tenant...");
 
-    // Clear case data first
+    // Clear in proper foreign key dependency order - dependent tables first
+    
+    // Clear case/inventory data first (depends on wines)
     await this.dataSource.query("DELETE FROM wine_inventory_entries WHERE tenant_id = $1", [this.defaultTenantId]);
     await this.dataSource.query("DELETE FROM operation_extras WHERE tenant_id = $1", [this.defaultTenantId]);
     await this.dataSource.query("DELETE FROM cases_operations WHERE tenant_id = $1", [this.defaultTenantId]);
@@ -61,13 +66,10 @@ class LegacyDataSeeder {
     await this.dataSource.query("DELETE FROM operations_groups WHERE tenant_id = $1", [this.defaultTenantId]);
     await this.dataSource.query("DELETE FROM cases WHERE tenant_id = $1", [this.defaultTenantId]);
 
-    // Clear wine data in reverse dependency order
-    // Delete from wines first since it references other tables
+    // Clear wine data - wines depend on other wine tables, so delete wines first
     await this.dataSource.query("DELETE FROM wines WHERE tenant_id = $1", [this.defaultTenantId]);
     
-    // Also delete any wines without tenant_id that might reference other tables
-    await this.dataSource.query("DELETE FROM wines WHERE tenant_id IS NULL OR tenant_id != $1", [this.defaultTenantId]);
-    
+    // Then delete the wine lookup tables (no dependencies between them)
     await this.dataSource.query("DELETE FROM wine_types WHERE tenant_id = $1", [this.defaultTenantId]);
     await this.dataSource.query("DELETE FROM wine_styles WHERE tenant_id = $1", [this.defaultTenantId]);
     await this.dataSource.query("DELETE FROM wine_varietals WHERE tenant_id = $1", [this.defaultTenantId]);
@@ -79,7 +81,6 @@ class LegacyDataSeeder {
     await this.dataSource.query("DELETE FROM wine_bottle_formats WHERE tenant_id = $1", [this.defaultTenantId]);
     await this.dataSource.query("DELETE FROM wine_bottle_vintages WHERE tenant_id = $1", [this.defaultTenantId]);
     await this.dataSource.query("DELETE FROM wine_vineyards WHERE tenant_id = $1", [this.defaultTenantId]);
-    
 
     console.log("✅ Existing tenant data cleared");
   }
@@ -137,28 +138,6 @@ class LegacyDataSeeder {
     return JSON.parse(content);
   }
 
-  async createDefaultTenant() {
-    console.log("🏢 Creating default tenant...");
-
-    // Check if default tenant exists
-    const existingTenant = await this.dataSource.query(
-      "SELECT id FROM tenants WHERE name = $1",
-      ["Veritas"]
-    );
-
-    if (existingTenant.length === 0) {
-      const tenantId = uuidv4();
-      await this.dataSource.query(
-        "INSERT INTO tenants (id, name, document_number, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)",
-        [tenantId, "Veritas", "VERITAS-001", new Date(), new Date()]
-      );
-      console.log("✅ Created default tenant");
-      this.defaultTenantId = tenantId;
-    } else {
-      console.log("✅ Using existing default tenant");
-      this.defaultTenantId = existingTenant[0].id;
-    }
-  }
 
   async seedWineCountries() {
     console.log("🌍 Seeding wine countries...");
@@ -496,20 +475,18 @@ class LegacyDataSeeder {
 async function bootstrap() {
   console.log("🚀 Starting Legacy Data Seeder...");
 
+  // Parse command line arguments for config path
+  const configPath = parseConfigPath();
+
   let dataSource = null;
 
   try {
+    // Load database configuration
+    const dbConfig = new DatabaseConfig(configPath);
+    dbConfig.validate();
+    
     // Create database connection
-    dataSource = new DataSource({
-      type: "postgres",
-      host: process.env.DB_HOST || "localhost",
-      port: parseInt(process.env.DB_PORT || "5432"),
-      username: process.env.DB_USERNAME || "postgres",
-      password: process.env.DB_PASSWORD || "postgres",
-      database: process.env.DB_DATABASE || "winehaus",
-      synchronize: false,
-      logging: false,
-    });
+    dataSource = new DataSource(dbConfig.getConnectionConfig());
 
     // Initialize connection
     await dataSource.initialize();
