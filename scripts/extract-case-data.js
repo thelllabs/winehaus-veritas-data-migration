@@ -6,11 +6,11 @@
  * See LLM_SCRIPT_INSTRUCTIONS.md for project-wide guidelines
  * 
  * This script connects to the legacy SQL Server database, extracts case data
- * from ACTIVE accounts only, and saves it locally in your preferred format
+ * from ALL accounts, and saves it locally in your preferred format
  * for migration purposes.
  * 
- * IMPORTANT: This script extracts data ONLY from active accounts (Accounts.IsActive = 1).
- * This ensures data quality and focuses on current business operations.
+ * IMPORTANT: This script extracts data from ALL accounts, including inactive ones.
+ * This ensures comprehensive data migration for historical records.
  * 
  * Usage:
  *   pnpm run case:extract                    # Extract with default settings
@@ -22,11 +22,11 @@
  *   node scripts/extract-case-data.js --output=./extracted-data --format=json
  *   node scripts/extract-case-data.js --format=csv --output=./case-data-csv
  * 
- * Output Files Generated (Active Accounts Only):
- * - cases.json - Main case information from active accounts
- * - caseDetails.json - Individual wine items within cases from active accounts
+ * Output Files Generated (All Accounts):
+ * - cases.json - Main case information from all accounts
+ * - caseDetails.json - Individual wine items within cases from all accounts
  * - caseLocations.json - Case storage locations (4K+ records expected)
- * - lockers.json - Storage locker details from active accounts
+ * - lockers.json - Storage locker details from all accounts
  * - wineItems.json - Wine product information (51K+ records expected)
  * - Plus all supporting wine metadata tables
  * 
@@ -42,8 +42,8 @@ const path = require('path');
 const { program } = require('commander');
 
 // SQL queries for case data extraction
-// IMPORTANT: These queries extract data ONLY from active accounts (Accounts.IsActive = 1)
-// All queries join with the Accounts table to filter out inactive accounts
+// IMPORTANT: These queries extract data from ALL accounts, including inactive ones
+// This ensures comprehensive data migration for historical records
 const EXTRACTION_QUERIES = {
   cases: `
     SELECT 
@@ -59,8 +59,6 @@ const EXTRACTION_QUERIES = {
       c.UserID as legacy_user_id,
       CASE WHEN c.isUsed = 1 THEN 'true' ELSE 'false' END as is_used
     FROM Cases c
-    INNER JOIN Accounts a ON c.AccountID = a.AccountID
-    WHERE a.IsActive = 1
     ORDER BY c.CaseID
   `,
   
@@ -77,9 +75,6 @@ const EXTRACTION_QUERIES = {
       cd.Notes,
       cd.UserID as legacy_user_id
     FROM CaseDetails cd
-    INNER JOIN Cases c ON cd.CaseID = c.CaseID
-    INNER JOIN Accounts a ON c.AccountID = a.AccountID
-    WHERE a.IsActive = 1
     ORDER BY cd.CaseDetailID
   `,
   
@@ -120,8 +115,6 @@ const EXTRACTION_QUERIES = {
       ,a.[UserID]
       ,a.[CreatedByUserID]
     FROM Activities a
-    INNER JOIN Accounts acc ON a.AccountID = acc.AccountID
-    WHERE acc.IsActive = 1
   `,
 
   activityDetails: `
@@ -158,8 +151,6 @@ const EXTRACTION_QUERIES = {
       CASE WHEN l.IsActive = 1 THEN 'true' ELSE 'false' END as is_active,
       CASE WHEN l.isCustom = 1 THEN 'true' ELSE 'false' END as is_custom
     FROM Lockers l
-    INNER JOIN Accounts a ON l.AccountID = a.AccountID
-    WHERE a.IsActive = 1
     ORDER BY l.LockerID
   `,
   
@@ -195,8 +186,6 @@ const EXTRACTION_QUERIES = {
       CASE WHEN lh.InventoryControl = 1 THEN 'true' ELSE 'false' END as inventory_control,
       lh.UserID as legacy_user_id
     FROM LockerHistory lh
-    INNER JOIN Accounts a ON lh.AccountID = a.AccountID
-    WHERE a.IsActive = 1
     ORDER BY lh.LockerHistoryID
   `,    
 };
@@ -501,7 +490,7 @@ async function main() {
   try {
     console.log('📦 Legacy Case Data Extractor');
     console.log('==============================\n');
-    console.log('This script will extract case data from ACTIVE accounts only in your legacy SQL Server database');
+    console.log('This script will extract case data from ALL accounts in your legacy SQL Server database');
     console.log('and save it locally in your preferred format for migration.\n');
     console.log('💡 Quick start: pnpm run case:extract\n');
     
@@ -515,7 +504,7 @@ async function main() {
     await extractor.connect();
     
     // Extract all data
-    console.log('\n📊 Extracting case data from ACTIVE accounts only...\n');
+    console.log('\n📊 Extracting case data from ALL accounts...\n');
     const extractedData = await extractor.extractAllData();
     
     // Disconnect from database

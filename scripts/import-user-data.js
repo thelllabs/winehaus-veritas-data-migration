@@ -58,6 +58,7 @@ class LegacyUserDataSeeder {
       
       // Seed data in dependency order
       await this.seedUsersByAccounts();
+      await this.seedUsers();
       await this.seedAddresses();
       
       console.log('✅ Legacy user data seeding completed successfully!');
@@ -78,7 +79,7 @@ class LegacyUserDataSeeder {
     await this.dataSource.query('DELETE FROM operations_groups WHERE tenant_id = $1', [this.defaultTenantId]);
     await this.dataSource.query('DELETE FROM cases WHERE tenant_id = $1', [this.defaultTenantId]);
     await this.dataSource.query('DELETE FROM addresses WHERE user_id IN (SELECT id FROM users WHERE tenant_id = $1) AND tenant_id = $1', [this.defaultTenantId]);
-    await this.dataSource.query('DELETE FROM users WHERE legacy_user_id IS NOT NULL AND tenant_id = $1', [this.defaultTenantId]);
+    await this.dataSource.query('DELETE FROM users WHERE tenant_id = $1', [this.defaultTenantId]);
     
     console.log('✅ Existing tenant user data cleared');
   }
@@ -124,16 +125,19 @@ class LegacyUserDataSeeder {
     let skipped = 0;
     
     for (const user of this.legacyData.users) {
+
       // Skip users without email (required field in new schema)
       if (!user.Email) {
         console.warn(`⚠️ Skipping user ${user.legacy_user_id} - no email address`);
         continue;
       }
+
+      const userFormattedEmail = this.formatEmail(user.Email);
       
       // Check if user already exists
       const existing = await this.dataSource.query(
         'SELECT id FROM users WHERE email = $1 AND tenant_id = $2',
-        [user.Email, this.defaultTenantId]
+        [userFormattedEmail, this.defaultTenantId]
       );
       
       if (existing.length === 0) {
@@ -158,7 +162,7 @@ class LegacyUserDataSeeder {
         if (user.Role) {
           const role = user.Role.toLowerCase().trim();
           if (role === 'staff' || role === 'staff manager') {
-            userRoles = ['operator', 'customer'];
+            userRoles = ['admin', 'customer'];
           }
           // If role is 'customer' or anything else, keep default ['customer']
         }
@@ -194,7 +198,7 @@ class LegacyUserDataSeeder {
             firstName,
             lastName,
             email,
-            null, // password - set to null for legacy users (they'll need to reset)
+            bcrypt.hashSync(user.Password, 10), // password - hash the legacy password
             null, // reset_password_token
             `{${userRoles.join(',')}}`, // Convert array to PostgreSQL array format
             userStatus,
@@ -228,10 +232,10 @@ class LegacyUserDataSeeder {
     
     for (const account of this.legacyData.accounts) {
 
-      if (account.is_active === 'false') {
-        console.warn(`⚠️ Skipping account ${account.FirstName} ${account.LastName} - account is inactive`);
-        continue;
-      }
+      // if (account.is_active === 'false') {
+      //   console.warn(`⚠️ Skipping account ${account.FirstName} ${account.LastName} - account is inactive`);
+      //   continue;
+      // }
 
       // Find associated user data for this account
       const user = this.legacyData.users.find(
@@ -240,13 +244,15 @@ class LegacyUserDataSeeder {
       
       if (!user && !account.Email) {
         console.warn(`⚠️ Skipping account ${account.legacy_account_id} - no email data found`);
+        console.log(breakAccountByLackOfEmail);
         continue;
       }
       
+      const userFormattedEmail = this.formatEmail(user.Email);
       // Check if user already exists
       const existing = await this.dataSource.query(
         'SELECT id FROM users WHERE email = $1 AND tenant_id = $2',
-        [user.Email, this.defaultTenantId]
+        [userFormattedEmail, this.defaultTenantId]
       );
       
       if (existing.length === 0) {
@@ -265,7 +271,7 @@ class LegacyUserDataSeeder {
         if (user.Role) {
           const role = user.Role.toLowerCase().trim();
           if (role === 'staff' || role === 'staff manager') {
-            userRoles = ['operator', 'customer'];
+            userRoles = ['admin', 'customer'];
           }
           // If role is 'customer' or anything else, keep default ['customer']
         }        
@@ -278,7 +284,6 @@ class LegacyUserDataSeeder {
         const firstName = this.formatName(getFirstName);
         const lastName = this.formatName(getLastName);
         const email = this.formatEmail(getEmail);
-        
         // Create user with all required fields
         const userId = uuidv4();
         await this.dataSource.query(
@@ -292,7 +297,7 @@ class LegacyUserDataSeeder {
             firstName,
             lastName,
             email,
-            bcrypt.hashSync(account.Email, 10), // password - set to null for legacy users (they'll need to reset)
+            bcrypt.hashSync(user.Password, 10), // password - set to null for legacy users (they'll need to reset)
             null, // reset_password_token
             `{${userRoles.join(',')}}`, // Convert array to PostgreSQL array format
             userStatus,

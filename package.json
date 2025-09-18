@@ -6,14 +6,21 @@
   "scripts": {
     "add-legacy-columns": "node scripts/add-legacy-id-columns.js",
     "wine:extract": "node scripts/extract-wine-data.js",
-    "wine:import": "node scripts/import-wine-data.js",
+    "wine:import": "node scripts/import-wine-data.js --clear-existing",
     "user:extract": "node scripts/extract-user-data.js",
     "user:import": "node scripts/import-user-data.js --clear-existing",
     "user:test": "node scripts/test-user-extraction.js",
     "case:extract": "node scripts/extract-case-data.js",
-    "case:import": "node scripts/import-case-data.js",
+    "case:import": "node scripts/import-case-data.js --clear-existing",
     "case:test": "node scripts/extract-case-data.js --help",
-    "addresses:parse": "node scripts/parse-addresses-final.js"
+    "addresses:parse": "node scripts/parse-addresses-final.js",
+    "clean:db": "node scripts/clean-database.js",
+    "clean:db:dry-run": "node scripts/clean-database.js --dry-run",
+    "clean:db:confirm": "node scripts/clean-database.js --confirm",
+    "test:connection": "node scripts/test-connection.js all",
+    "test:connection:local": "node scripts/test-connection.js database-import.local.config.json",
+    "test:connection:prod": "node scripts/test-connection.js database-import.config.json",
+    "get-ip": "node scripts/get-current-ip.js"
   },
   "keywords": [
     "wine",

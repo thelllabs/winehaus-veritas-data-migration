@@ -148,6 +148,17 @@ const EXTRACTION_QUERIES = {
     FROM BottleSizes bs
     ORDER BY bs.BottleSizeID
   `,
+
+  wineVineyards: `
+    SELECT 
+      wsv.WineSingleVineyardID as legacy_id,
+      wsv.WineSingleVineyardName as name,
+      CASE WHEN wsv.IsActive = 1 THEN 'true' ELSE 'false' END as is_active,
+      wsv.DateCreated as created_at,
+      wsv.DateUpdated as updated_at
+    FROM WineSingleVineyards wsv
+    ORDER BY wsv.WineSingleVineyardID
+  `,
   
   wineItems: `
     SELECT 

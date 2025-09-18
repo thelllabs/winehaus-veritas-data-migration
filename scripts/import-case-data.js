@@ -304,30 +304,30 @@ class LegacyCaseDataSeeder {
         const customerId = newUser[0].id;
 
         // Check if the user is active in the new system
-        const userStatus = await this.dataSource.query(
-          "SELECT status FROM users WHERE id = $1",
-          [customerId]
-        );
+        // const userStatus = await this.dataSource.query(
+        //   "SELECT status FROM users WHERE id = $1",
+        //   [customerId]
+        // );
 
-        if (userStatus.length === 0 || userStatus[0].status === "blocked") {
-          console.warn(
-            `⚠️ Skipping case ${
-              caseData.legacy_case_id
-            } - user is inactive (status: ${
-              userStatus[0]?.status || "unknown"
-            })`
-          );
+        // if (userStatus.length === 0 || userStatus[0].status === "blocked") {
+        //   console.warn(
+        //     `⚠️ Skipping case ${
+        //       caseData.legacy_case_id
+        //     } - user is inactive (status: ${
+        //       userStatus[0]?.status || "unknown"
+        //     })`
+        //   );
 
-          // Store customer ID mapping for skipped users (inactive users)
-          if (!this.customerIdMap) this.customerIdMap = new Map();
-          this.customerIdMap.set(
-            caseData.legacy_account_id.toString(),
-            customerId
-          );
+        //   // Store customer ID mapping for skipped users (inactive users)
+        //   if (!this.customerIdMap) this.customerIdMap = new Map();
+        //   this.customerIdMap.set(
+        //     caseData.legacy_account_id.toString(),
+        //     customerId
+        //   );
 
-          inactiveUsersSkipped++;
-          continue;
-        }
+        //   inactiveUsersSkipped++;
+        //   continue;
+        // }
 
         // Determine case name
         let caseName = `#${caseData.CaseNumber}`;
@@ -350,7 +350,7 @@ class LegacyCaseDataSeeder {
             id, tenant_id, customer_id, name, location, description, billing_start_date, 
             billing_end_date, max_items, current_items, created_at, updated_at, 
             deleted_at, legacy_id
-          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
           [
             caseId,
             this.defaultTenantId,
@@ -360,7 +360,7 @@ class LegacyCaseDataSeeder {
             `Legacy Case ID: ${caseData.legacy_case_id}. Legacy Case Status: ${caseData.is_active}.`,
             new Date(caseData.created_at || Date.now()),
             caseData.is_active === "false" ? new Date() : null, // billing_end_date - set to null for legacy cases
-            caseData.max_quantity,
+            caseData.MaxQuantity,
             0, // current_items - start with 0, will be calculated from operations
             new Date(caseData.created_at || Date.now()),
             new Date(caseData.updated_at || Date.now()),
@@ -562,7 +562,7 @@ class LegacyCaseDataSeeder {
 
     } catch (error) {
       console.log({ error, activityDetail, newWineId, newBottleFormatId, newBottleVintageId });
-      console.log(teste);
+      // console.log(teste);
       return;
     }
 
@@ -588,7 +588,7 @@ class LegacyCaseDataSeeder {
       );
       console.log({ activity });
       console.log({ activityDetail });
-      console.log(teste);
+      // console.log(teste);
       return;
     }
 
@@ -650,7 +650,7 @@ class LegacyCaseDataSeeder {
         `⚠️ No case detail found for case detail ID ${caseDetailId}, skipping`
       );
       console.log({ caseDetailId });
-      console.log(teste);
+      // console.log(teste);
       return;
     }
 
@@ -660,7 +660,7 @@ class LegacyCaseDataSeeder {
     } catch (error) {
       console.log({ caseDetail });
       console.log({ error, caseDetailId });
-      console.log(teste);
+      // console.log(teste);
       return;
     }
 
@@ -669,7 +669,7 @@ class LegacyCaseDataSeeder {
         `⚠️ No case ID found for case detail ID ${caseDetailId}, skipping`
       );
       console.log({ caseDetailId });
-      console.log(teste);
+      // console.log(teste);
       return;
     }
 
@@ -738,7 +738,7 @@ class LegacyCaseDataSeeder {
         `⚠️ No case ID found for case detail ID ${activityDetail.CaseDetailID}, skipping`
       );
       console.log({ activityDetail });
-      console.log(teste);
+      // console.log(teste);
       return;
     }
 
@@ -808,7 +808,7 @@ class LegacyCaseDataSeeder {
       caseId = this.caseIdMap.get(activityDetail.CaseID.toString());
     } catch (error) {
       console.log({ error, activityDetail });
-      console.log({ teste });
+      // console.log({ teste });
       return;
     }
 
@@ -897,7 +897,6 @@ class LegacyCaseDataSeeder {
       console.log(
         `⚠️ No case operation found for activity detail ${activityDetail.ActivityDetailID}, skipping`
       );
-      console.log(teste);
       return;
     }
 
@@ -922,7 +921,7 @@ class LegacyCaseDataSeeder {
         newBottleFormatId,
         newBottleVintageId,
       });
-      console.log(teste);
+      // console.log(teste);
       return;
     }
 

@@ -29,6 +29,7 @@ const EXTRACTION_QUERIES = {
       u.Email,
       u.Username,
       u.Role,
+      u.Password,
       CASE WHEN u.IsActive = 1 THEN 'true' ELSE 'false' END as is_active,
       u.LastLogin,
       u.DateCreated as created_at,

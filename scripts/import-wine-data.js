@@ -43,6 +43,7 @@ class LegacyDataSeeder {
       await this.seedWineStyles();
       await this.seedWineBottleVintages();
       await this.seedWineBottleSizes();
+      await this.seedWineVineyards();
       await this.seedWineTypes();
       await this.seedWines();
 
@@ -117,6 +118,9 @@ class LegacyDataSeeder {
       ),
       wineBottleSizes: this.loadJsonFile(
         path.join(dataDir, "wineBottleSizes.json")
+      ),
+      wineVineyards: this.loadJsonFile(
+        path.join(dataDir, "wineVineyards.json")
       ),
       wineItems: this.loadJsonFile(path.join(dataDir, "wineItems.json")),
     };
@@ -359,6 +363,30 @@ class LegacyDataSeeder {
     console.log(`✅ Wine bottle sizes: ${inserted} inserted`);
   }
 
+  async seedWineVineyards() {
+    console.log("🍇 Seeding wine vineyards...");
+
+    let inserted = 0;
+
+    for (const vineyard of this.legacyData.wineVineyards) {
+      const newId = uuidv4();
+      await this.dataSource.query(
+        "INSERT INTO wine_vineyards (id, name, tenant_id, legacy_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)",
+        [
+          newId,
+          vineyard.name,
+          this.defaultTenantId,
+          vineyard.legacy_id ? vineyard.legacy_id.toString() : null,
+          new Date(vineyard.created_at),
+          new Date(vineyard.updated_at),
+        ]
+      );
+      inserted++;
+    }
+
+    console.log(`✅ Wine vineyards: ${inserted} inserted`);
+  }
+
   async seedWineTypes() {
     console.log("🎭 Seeding wine types (colors)...");
 
@@ -411,6 +439,9 @@ class LegacyDataSeeder {
     const types = await this.dataSource.query(
       "SELECT id, legacy_id FROM wine_types"
     );
+    const vineyards = await this.dataSource.query(
+      "SELECT id, legacy_id FROM wine_vineyards"
+    );
 
     // Create lookup maps for legacy IDs
     const countryMap = new Map(countries.map((c) => [c.legacy_id, c.id]));
@@ -421,6 +452,7 @@ class LegacyDataSeeder {
     const brandMap = new Map(brands.map((b) => [b.legacy_id, b.id]));
     const styleMap = new Map(styles.map((s) => [s.legacy_id, s.id]));
     const typeMap = new Map(types.map((t) => [t.legacy_id, t.id]));
+    const vineyardMap = new Map(vineyards.map((v) => [v.legacy_id, v.id]));
 
     // Log mapping statistics for debugging
     console.log(`📊 Lookup maps created:`);
@@ -432,6 +464,7 @@ class LegacyDataSeeder {
     console.log(`   Brands: ${brandMap.size} mapped`);
     console.log(`   Styles: ${styleMap.size} mapped`);
     console.log(`   Types: ${typeMap.size} mapped`);
+    console.log(`   Vineyards: ${vineyardMap.size} mapped`);
 
     let inserted = 0;
 
@@ -451,6 +484,7 @@ class LegacyDataSeeder {
         style_id: item.style_legacy_id ? styleMap.get(item.style_legacy_id.toString()) : null,
         varietal_id: item.varietal_legacy_id ? varietalMap.get(item.varietal_legacy_id.toString()) : null,
         village_id: item.village_legacy_id ? villageMap.get(item.village_legacy_id.toString()) : null,
+        vineyard_id: item.vineyard_legacy_id ? vineyardMap.get(item.vineyard_legacy_id.toString()) : null,
         legacy_id: item.legacy_id ? item.legacy_id.toString() : null,
         tenant_id: this.defaultTenantId,
         // deleted_at: item.is_approved === "true" ? null : new Date(),

@@ -106,7 +106,7 @@ class DatabaseConfig {
  * @param {string} defaultPath - Default config path if not specified
  * @returns {string} Configuration file path
  */
-function parseConfigPath(argv = process.argv, defaultPath = './database-import.config.json') {
+function parseConfigPath(argv = process.argv, defaultPath = './database-import.local.config.json') {
   const configArg = argv.find(arg => arg.startsWith('--config='));
   return configArg ? configArg.split('=')[1] : defaultPath;
 }
