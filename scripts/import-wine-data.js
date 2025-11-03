@@ -476,7 +476,7 @@ class LegacyDataSeeder {
       // Find related entities by legacy_id for more reliable mapping
       const payload = {
         id: newId,
-        type_id: item.type_legacy_id ? typeMap.get(item.type_legacy_id.toString()) : null,
+        type_id: item.color_legacy_id ? typeMap.get(item.color_legacy_id.toString()) : null,
         brand_id: item.brand_legacy_id ? brandMap.get(item.brand_legacy_id.toString()) : null,
         country_id: item.country_legacy_id ? countryMap.get(item.country_legacy_id.toString()) : null,
         producer_id: item.producer_legacy_id ? producerMap.get(item.producer_legacy_id.toString()) : null,

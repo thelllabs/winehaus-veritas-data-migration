@@ -1,16 +1,24 @@
 #!/usr/bin/env node
 
+// ========================================
+// CONFIGURATION: Active Accounts Filter
+// ========================================
+// Set to true to extract cases from ACTIVE accounts only
+// Set to false to extract cases from ALL accounts (active and inactive)
+const EXTRACT_ACTIVE_ACCOUNTS_ONLY = true;
+
 /**
  * Legacy Case Data Extraction Script
  * 
  * See LLM_SCRIPT_INSTRUCTIONS.md for project-wide guidelines
  * 
  * This script connects to the legacy SQL Server database, extracts case data
- * from ALL accounts, and saves it locally in your preferred format
- * for migration purposes.
+ * and saves it locally in your preferred format for migration purposes.
  * 
- * IMPORTANT: This script extracts data from ALL accounts, including inactive ones.
- * This ensures comprehensive data migration for historical records.
+ * ACCOUNT FILTERING:
+ * - By default, extracts data from ALL accounts (active and inactive)
+ * - Set EXTRACT_ACTIVE_ACCOUNTS_ONLY = true to extract only from active accounts
+ * - This ensures you can choose between comprehensive migration vs. active-only migration
  * 
  * Usage:
  *   pnpm run case:extract                    # Extract with default settings
@@ -22,12 +30,12 @@
  *   node scripts/extract-case-data.js --output=./extracted-data --format=json
  *   node scripts/extract-case-data.js --format=csv --output=./case-data-csv
  * 
- * Output Files Generated (All Accounts):
- * - cases.json - Main case information from all accounts
- * - caseDetails.json - Individual wine items within cases from all accounts
- * - caseLocations.json - Case storage locations (4K+ records expected)
- * - lockers.json - Storage locker details from all accounts
- * - wineItems.json - Wine product information (51K+ records expected)
+ * Output Files Generated:
+ * - cases.json - Main case information
+ * - caseDetails.json - Individual wine items within cases
+ * - caseLocations.json - Case storage locations
+ * - lockers.json - Storage locker details
+ * - wineItems.json - Wine product information
  * - Plus all supporting wine metadata tables
  * 
  * Data Integrity Checks:
@@ -41,42 +49,59 @@ const fs = require('fs');
 const path = require('path');
 const { program } = require('commander');
 
-// SQL queries for case data extraction
-// IMPORTANT: These queries extract data from ALL accounts, including inactive ones
-// This ensures comprehensive data migration for historical records
-const EXTRACTION_QUERIES = {
-  cases: `
-    SELECT 
-      c.CaseID as legacy_case_id,
-      c.AccountID as legacy_account_id,
-      CASE WHEN c.IsActive = 1 THEN 'true' ELSE 'false' END as is_active,
-      c.DateCreated as created_at,
-      c.DateUpdated as updated_at,
-      c.MaxQuantity,
-      c.CaseNumber,
-      c.CaseLocationID as legacy_case_location_id,
-      c.LockerID as legacy_locker_id,
-      c.UserID as legacy_user_id,
-      CASE WHEN c.isUsed = 1 THEN 'true' ELSE 'false' END as is_used
-    FROM Cases c
-    ORDER BY c.CaseID
-  `,
+/**
+ * Generate SQL queries for case data extraction
+ * Queries can be filtered to extract data from active accounts only or all accounts
+ */
+function getExtractionQueries(activeAccountsOnly = false) {
+  const accountFilter = activeAccountsOnly ? 
+    `INNER JOIN Accounts acc ON c.AccountID = acc.AccountID AND acc.IsActive = 1` : '';
   
-  caseDetails: `
-    SELECT 
-      cd.CaseDetailID as legacy_case_detail_id,
-      cd.CaseID as legacy_case_id,
-      cd.WineItemID as legacy_wine_item_id,
-      cd.WineQuantity,
-      cd.DateCreated as created_at,
-      cd.DateUpdated as updated_at,
-      cd.VintageID as legacy_vintage_id,
-      cd.BottleSizeID as legacy_bottle_size_id,
-      cd.Notes,
-      cd.UserID as legacy_user_id
-    FROM CaseDetails cd
-    ORDER BY cd.CaseDetailID
-  `,
+  const accountFilterForLockers = activeAccountsOnly ? 
+    `INNER JOIN Accounts acc ON l.AccountID = acc.AccountID AND acc.IsActive = 1` : '';
+    
+  const accountFilterForActivities = activeAccountsOnly ? 
+    `INNER JOIN Accounts acc ON a.AccountID = acc.AccountID AND acc.IsActive = 1` : '';
+    
+  const accountFilterForLockerHistory = activeAccountsOnly ? 
+    `INNER JOIN Accounts acc ON lh.AccountID = acc.AccountID AND acc.IsActive = 1` : '';
+
+  return {
+    cases: `
+      SELECT 
+        c.CaseID as legacy_case_id,
+        c.AccountID as legacy_account_id,
+        CASE WHEN c.IsActive = 1 THEN 'true' ELSE 'false' END as is_active,
+        c.DateCreated as created_at,
+        c.DateUpdated as updated_at,
+        c.MaxQuantity,
+        c.CaseNumber,
+        c.CaseLocationID as legacy_case_location_id,
+        c.LockerID as legacy_locker_id,
+        c.UserID as legacy_user_id,
+        CASE WHEN c.isUsed = 1 THEN 'true' ELSE 'false' END as is_used
+      FROM Cases c
+      ${accountFilter}
+      ORDER BY c.CaseID
+    `,
+  
+    caseDetails: `
+      SELECT 
+        cd.CaseDetailID as legacy_case_detail_id,
+        cd.CaseID as legacy_case_id,
+        cd.WineItemID as legacy_wine_item_id,
+        cd.WineQuantity,
+        cd.DateCreated as created_at,
+        cd.DateUpdated as updated_at,
+        cd.VintageID as legacy_vintage_id,
+        cd.BottleSizeID as legacy_bottle_size_id,
+        cd.Notes,
+        cd.UserID as legacy_user_id
+      FROM CaseDetails cd
+      ${activeAccountsOnly ? 
+        'INNER JOIN Cases c ON cd.CaseID = c.CaseID INNER JOIN Accounts acc ON c.AccountID = acc.AccountID AND acc.IsActive = 1' : ''}
+      ORDER BY cd.CaseDetailID
+    `,
   
   caseLocations: `
     SELECT 
@@ -90,69 +115,73 @@ const EXTRACTION_QUERIES = {
     ORDER BY cl.CaseLocationID
   `,
 
-  activities: `
-    SELECT 
-      a.[ActivityID]
-      ,a.[AccountID]
-      ,a.[TransactionType]
-      ,a.[ToAddressID]
-      ,a.[ToAddressType]
-      ,a.[FromAddressID]
-      ,a.[FromAddressType]
-      ,a.[HandlingQty]
-      ,a.[HandlingPrice]
-      ,a.[Notes]
-      ,a.[ShippingMethodID]
-      ,a.[ShippingQty]
-      ,a.[ShippingRate]
-      ,a.[ShippingTotal]
-      ,a.[ShippingDate]
-      ,a.[Status]
-      ,a.[DateCreated]
-      ,a.[DateUpdated]
-      ,a.[isTransfer]
-      ,a.[StagingNote]
-      ,a.[UserID]
-      ,a.[CreatedByUserID]
-    FROM Activities a
-  `,
+    activities: `
+      SELECT 
+        a.[ActivityID]
+        ,a.[AccountID]
+        ,a.[TransactionType]
+        ,a.[ToAddressID]
+        ,a.[ToAddressType]
+        ,a.[FromAddressID]
+        ,a.[FromAddressType]
+        ,a.[HandlingQty]
+        ,a.[HandlingPrice]
+        ,a.[Notes]
+        ,a.[ShippingMethodID]
+        ,a.[ShippingQty]
+        ,a.[ShippingRate]
+        ,a.[ShippingTotal]
+        ,a.[ShippingDate]
+        ,a.[Status]
+        ,a.[DateCreated]
+        ,a.[DateUpdated]
+        ,a.[isTransfer]
+        ,a.[StagingNote]
+        ,a.[UserID]
+        ,a.[CreatedByUserID]
+      FROM Activities a
+      ${accountFilterForActivities}
+    `,
 
-  activityDetails: `
-    SELECT 
-      ad.[ActivityDetailID]
-      ,ad.[ActivityID]
-      ,ad.[WineItemID]
-      ,ad.[SupplyID]
-      ,ad.[Quantity]
-      ,ad.[ActivityType]
-      ,ad.[CaseID]
-      ,ad.[CaseDetailID]
-      ,ad.[VintageID]
-      ,ad.[BottleSizeID]
-      ,ad.[FromCaseLocationID]
-      ,ad.[FromLockerID]
-      ,ad.[ToCaseLocationID]
-      ,ad.[ToLockerID]
-      ,ad.[DateCreated]
-      ,ad.[DateUpdated]
-      ,ad.[UserID]
-    FROM ActivityDetails ad
-  `,
+    activityDetails: `
+      SELECT 
+        ad.[ActivityDetailID]
+        ,ad.[ActivityID]
+        ,ad.[WineItemID]
+        ,ad.[SupplyID]
+        ,ad.[Quantity]
+        ,ad.[ActivityType]
+        ,ad.[CaseID]
+        ,ad.[CaseDetailID]
+        ,ad.[VintageID]
+        ,ad.[BottleSizeID]
+        ,ad.[FromCaseLocationID]
+        ,ad.[FromLockerID]
+        ,ad.[ToCaseLocationID]
+        ,ad.[ToLockerID]
+        ,ad.[DateCreated]
+        ,ad.[DateUpdated]
+        ,ad.[UserID]
+      FROM ActivityDetails ad
+      ${activeAccountsOnly ? 
+        'INNER JOIN Activities a ON ad.ActivityID = a.ActivityID INNER JOIN Accounts acc ON a.AccountID = acc.AccountID AND acc.IsActive = 1' : ''}
+    `,
   
-  lockers: `
-    SELECT 
-      l.LockerID as legacy_locker_id,
-      l.LockerNumber,
-      CASE WHEN l.InventoryControl = 1 THEN 'true' ELSE 'false' END as inventory_control,
-      l.Rate,
-      l.AccountID as legacy_account_id,
-      l.DateCreated as created_at,
-      l.DateUpdated as updated_at,
-      CASE WHEN l.IsActive = 1 THEN 'true' ELSE 'false' END as is_active,
-      CASE WHEN l.isCustom = 1 THEN 'true' ELSE 'false' END as is_custom
-    FROM Lockers l
-    ORDER BY l.LockerID
-  `,
+    lockers: `
+      SELECT 
+        l.LockerID as legacy_locker_id,
+        l.LockerNumber,
+        CASE WHEN l.InventoryControl = 1 THEN 'true' ELSE 'false' END as inventory_control,
+        l.Rate,
+        l.AccountID as legacy_account_id,
+        l.DateCreated as created_at,
+        l.DateUpdated as updated_at,
+        CASE WHEN l.IsActive = 1 THEN 'true' ELSE 'false' END as is_active,
+        CASE WHEN l.isCustom = 1 THEN 'true' ELSE 'false' END as is_custom
+      FROM Lockers l
+      ${accountFilterForLockers}
+      ORDER BY l.LockerID
+    `,
   
   caseTypes: `
     SELECT 
@@ -175,20 +204,22 @@ const EXTRACTION_QUERIES = {
     ORDER BY ld.LockerDetailID
   `,
   
-  lockerHistory: `
-    SELECT 
-      lh.LockerHistoryID as legacy_locker_history_id,
-      lh.LockerID as legacy_locker_id,
-      lh.AccountID as legacy_account_id,
-      lh.DateStarted,
-      lh.DateEnded,
-      lh.Rate,
-      CASE WHEN lh.InventoryControl = 1 THEN 'true' ELSE 'false' END as inventory_control,
-      lh.UserID as legacy_user_id
-    FROM LockerHistory lh
-    ORDER BY lh.LockerHistoryID
-  `,    
-};
+    lockerHistory: `
+      SELECT 
+        lh.LockerHistoryID as legacy_locker_history_id,
+        lh.LockerID as legacy_locker_id,
+        lh.AccountID as legacy_account_id,
+        lh.DateStarted,
+        lh.DateEnded,
+        lh.Rate,
+        CASE WHEN lh.InventoryControl = 1 THEN 'true' ELSE 'false' END as inventory_control,
+        lh.UserID as legacy_user_id
+      FROM LockerHistory lh
+      ${accountFilterForLockerHistory}
+      ORDER BY lh.LockerHistoryID
+    `,    
+  };
+}
 
 /**
  * Database connection configuration
@@ -302,8 +333,11 @@ class LegacyCaseDataExtractor {
 
   async extractAllData() {
     const extractedData = {};
+    const queries = getExtractionQueries(EXTRACT_ACTIVE_ACCOUNTS_ONLY);
     
-    for (const [queryName, query] of Object.entries(EXTRACTION_QUERIES)) {
+    console.log(`📊 Extracting case data from ${EXTRACT_ACTIVE_ACCOUNTS_ONLY ? 'ACTIVE' : 'ALL'} accounts...`);
+    
+    for (const [queryName, query] of Object.entries(queries)) {
       try {
         extractedData[queryName] = await this.executeQuery(queryName, query);
       } catch (error) {
@@ -490,8 +524,9 @@ async function main() {
   try {
     console.log('📦 Legacy Case Data Extractor');
     console.log('==============================\n');
-    console.log('This script will extract case data from ALL accounts in your legacy SQL Server database');
+    console.log(`This script will extract case data from ${EXTRACT_ACTIVE_ACCOUNTS_ONLY ? 'ACTIVE' : 'ALL'} accounts in your legacy SQL Server database`);
     console.log('and save it locally in your preferred format for migration.\n');
+    console.log(`Account Filter: ${EXTRACT_ACTIVE_ACCOUNTS_ONLY ? 'Active accounts only' : 'All accounts (active and inactive)'}`);
     console.log('💡 Quick start: pnpm run case:extract\n');
     
     // Load database configuration
@@ -504,7 +539,6 @@ async function main() {
     await extractor.connect();
     
     // Extract all data
-    console.log('\n📊 Extracting case data from ALL accounts...\n');
     const extractedData = await extractor.extractAllData();
     
     // Disconnect from database
@@ -522,15 +556,16 @@ async function main() {
     }
     
     console.log(`\n🎉 Case data extraction completed successfully!`);
+    console.log(`Filter Applied: ${EXTRACT_ACTIVE_ACCOUNTS_ONLY ? 'Active accounts only' : 'All accounts (active and inactive)'}`);
     
     // Provide validation queries
     console.log(`\n📊 Validation Queries:`);
     console.log(`========================`);
     console.log(`-- Verify case data integrity:`);
-    console.log(`-- SELECT COUNT(*) as total_cases FROM Cases;`);
+    console.log(`-- SELECT COUNT(*) as total_cases FROM Cases${EXTRACT_ACTIVE_ACCOUNTS_ONLY ? ' c INNER JOIN Accounts acc ON c.AccountID = acc.AccountID WHERE acc.IsActive = 1' : ''};`);
     console.log(`-- SELECT COUNT(*) as total_case_details FROM CaseDetails;`);
     console.log(`-- SELECT COUNT(*) as total_case_locations FROM CaseLocations;`);
-    console.log(`-- SELECT COUNT(*) as total_lockers FROM Lockers;`);
+    console.log(`-- SELECT COUNT(*) as total_lockers FROM Lockers${EXTRACT_ACTIVE_ACCOUNTS_ONLY ? ' l INNER JOIN Accounts acc ON l.AccountID = acc.AccountID WHERE acc.IsActive = 1' : ''};`);
     console.log(`-- SELECT COUNT(*) as total_wine_items FROM WineItems;`);
     
     console.log(`\nNext steps:`);
@@ -589,5 +624,6 @@ module.exports = {
   DatabaseConfig,
   LegacyCaseDataExtractor,
   DataSaver,
-  EXTRACTION_QUERIES
+  getExtractionQueries,
+  EXTRACT_ACTIVE_ACCOUNTS_ONLY
 };

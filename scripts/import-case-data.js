@@ -176,6 +176,10 @@ class LegacyCaseDataSeeder {
 
     // Clear in reverse dependency order, only for the specific tenant
     await this.dataSource.query(
+      "DELETE FROM invoices WHERE tenant_id = $1",
+      [this.defaultTenantId]
+    );
+    await this.dataSource.query(
       "DELETE FROM wine_inventory_entries WHERE tenant_id = $1",
       [this.defaultTenantId]
     );
@@ -280,9 +284,9 @@ class LegacyCaseDataSeeder {
         );
 
         if (!account) {
-          console.warn(
-            `⚠️ Skipping case ${caseData.legacy_case_id} - no account found`
-          );
+          // console.warn(
+          //   `⚠️ Skipping case ${caseData.legacy_case_id} - no account found`
+          // );
           noAccountFound++;
           continue;
         }
@@ -294,9 +298,9 @@ class LegacyCaseDataSeeder {
         );
 
         if (newUser.length === 0) {
-          console.warn(
-            `⚠️ Skipping case ${caseData.legacy_case_id} - user not yet imported`
-          );
+          // console.warn(
+          //   `⚠️ Skipping case ${caseData.legacy_case_id} - user not yet imported`
+          // );
           userNotImported++;
           continue;
         }
@@ -359,7 +363,7 @@ class LegacyCaseDataSeeder {
             caseLocation,
             `Legacy Case ID: ${caseData.legacy_case_id}. Legacy Case Status: ${caseData.is_active}.`,
             new Date(caseData.created_at || Date.now()),
-            caseData.is_active === "false" ? new Date() : null, // billing_end_date - set to null for legacy cases
+            caseData.is_active === "false" ? new Date(caseData.updated_at) : null, // billing_end_date - set to null for legacy cases
             caseData.MaxQuantity,
             0, // current_items - start with 0, will be calculated from operations
             new Date(caseData.created_at || Date.now()),
@@ -941,9 +945,9 @@ class LegacyCaseDataSeeder {
     const activityDetails = this.getInventoryActivityDetails(activity);
 
     if (activityDetails.length === 0) {
-      console.log(
-        `⚠️ No activity details found for activity ${activity.ActivityID}, skipping`
-      );
+      // console.log(
+      //   `⚠️ No activity details found for activity ${activity.ActivityID}, skipping`
+      // );
       return;
     }
 
@@ -962,9 +966,9 @@ class LegacyCaseDataSeeder {
     const activityDetails = this.getInventoryActivityDetails(activity);
 
     if (activityDetails.length === 0) {
-      console.log(
-        `⚠️ No activity details found for activity ${activity.ActivityID}, skipping`
-      );
+      // console.log(
+      //   `⚠️ No activity details found for activity ${activity.ActivityID}, skipping`
+      // );
       return;
     }
 
@@ -990,9 +994,9 @@ class LegacyCaseDataSeeder {
     );
 
     if (wine.length === 0) {
-      console.log(
-        `⚠️ No wine found for wine legacy_id ${legacyWineId}, skipping`
-      );
+      // console.log(
+      //   `⚠️ No wine found for wine legacy_id ${legacyWineId}, skipping`
+      // );
       return null;
     }
 
@@ -1015,9 +1019,9 @@ class LegacyCaseDataSeeder {
     );
 
     if (bottleFormat.length === 0) {
-      console.log(
-        `⚠️ No bottle format found for legacy_id ${legacyBottleFormatId}, skipping`
-      );
+      // console.log(
+      //   `⚠️ No bottle format found for legacy_id ${legacyBottleFormatId}, skipping`
+      // );
       return null;
     }
 
@@ -1039,9 +1043,9 @@ class LegacyCaseDataSeeder {
     );
 
     if (bottleVintage.length === 0) {
-      console.log(
-        `⚠️ No bottle vintage found for legacy_id ${legacyBottleVintageId}, skipping`
-      );
+      // console.log(
+      //   `⚠️ No bottle vintage found for legacy_id ${legacyBottleVintageId}, skipping`
+      // );
       return null;
     }
 
@@ -1142,7 +1146,7 @@ class LegacyCaseDataSeeder {
 
     // Delete all wine inventory entries related to cases
     await this.dataSource.query(`
-      DELETE FROM wine_inventory_entries WHERE tenant_id = $1 AND operation_id IS NULL
+      DELETE FROM wine_inventory_entries WHERE tenant_id = $1 AND case_id IS NOT NULL
     `, [this.defaultTenantId]);
 
     let inserted = 0;
@@ -1183,7 +1187,7 @@ class LegacyCaseDataSeeder {
         
        // Skip if caseDetail.WineQuantity is not greater than 0
        if (caseDetail.WineQuantity <= 0) {
-        console.log(`⚠️ Wine quantity is not greater than 0 for case detail ${caseDetail.legacy_case_detail_id}, skipping`);
+        // console.log(`⚠️ Wine quantity is not greater than 0 for case detail ${caseDetail.legacy_case_detail_id}, skipping`);
         skipped++;
         continue;
        }
@@ -1201,7 +1205,22 @@ class LegacyCaseDataSeeder {
         skipped++;
         continue;
        }
-       
+
+       const [ newCase ] = await this.dataSource.query(
+        `SELECT * FROM cases WHERE tenant_id = $1 AND id = $2`,
+        [this.defaultTenantId, newCaseId]
+       );
+       if (!newCase) {
+        console.log(`⚠️ Case does not exist for case detail ${caseDetail.legacy_case_detail_id}, skipping`);
+        skipped++;
+        continue;
+       }
+
+      if (newCase.billing_end_date !== null) {
+        // console.log(`⚠️ Case is billed, skipping case detail ${caseDetail.legacy_case_detail_id}, skipping`);
+        skipped++;
+        continue;
+      }       
 
         await this.dataSource.query(
           `INSERT INTO wine_inventory_entries (
@@ -1281,8 +1300,7 @@ class LegacyCaseDataSeeder {
     return this.legacyData.activities.filter(
       (activity) =>
         activity.AccountID &&
-        activity.AccountID.toString() === legacyAccountId.toString() &&
-        activity.Status === 1
+        activity.AccountID.toString() === legacyAccountId.toString()
     );
   }
 
@@ -1409,7 +1427,7 @@ class LegacyCaseDataSeeder {
     let skipped = 0;
 
     const filterByAccountId = null;
-    // const filterByAccountId = 1084096;
+    // const filterByAccountId = 1084018;
 
     if (filterByAccountId) {
       this.customerIdMap = new Map(
@@ -1430,7 +1448,7 @@ class LegacyCaseDataSeeder {
         continue;
       }
 
-      for (const activity of customerActivities) {
+      for (const activity of customerActivities) {       
         await this.createOperationGroup(customerId, activity);
         inserted++;
       }

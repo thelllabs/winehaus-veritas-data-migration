@@ -57,8 +57,9 @@ class LegacyUserDataSeeder {
       }
       
       // Seed data in dependency order
-      await this.seedUsersByAccounts();
-      await this.seedUsers();
+      await this.seedUsersByAccounts();      
+      // await this.seedUsers();
+      await this.seedManagers();
       await this.seedAddresses();
       
       console.log('✅ Legacy user data seeding completed successfully!');
@@ -73,6 +74,8 @@ class LegacyUserDataSeeder {
     console.log('🧹 Clearing existing user data for tenant...');
     
     // Clear in reverse dependency order, only for the specific tenant
+    await this.dataSource.query("DELETE FROM users_notifications WHERE tenant_id = $1",[this.defaultTenantId]);
+    await this.dataSource.query("DELETE FROM invoices WHERE tenant_id = $1",[this.defaultTenantId]);
     await this.dataSource.query('DELETE FROM operation_extras WHERE tenant_id = $1', [this.defaultTenantId]);
     await this.dataSource.query('DELETE FROM cases_operations WHERE tenant_id = $1', [this.defaultTenantId]);
     await this.dataSource.query('DELETE FROM operations_requests WHERE tenant_id = $1', [this.defaultTenantId]);
@@ -128,7 +131,7 @@ class LegacyUserDataSeeder {
 
       // Skip users without email (required field in new schema)
       if (!user.Email) {
-        console.warn(`⚠️ Skipping user ${user.legacy_user_id} - no email address`);
+        // console.warn(`⚠️ Skipping user ${user.legacy_user_id} - no email address`);
         continue;
       }
 
@@ -162,7 +165,117 @@ class LegacyUserDataSeeder {
         if (user.Role) {
           const role = user.Role.toLowerCase().trim();
           if (role === 'staff' || role === 'staff manager') {
-            userRoles = ['admin', 'customer'];
+            userRoles = ['admin'];
+          }
+          // If role is 'customer' or anything else, keep default ['customer']
+        }
+        
+        // Validate user roles enum values
+        const validRoles = ['operator', 'admin', 'owner', 'customer'];
+        userRoles = userRoles.filter(role => validRoles.includes(role));
+        if (userRoles.length === 0) {
+          console.warn(`⚠️ No valid roles found for user ${user.legacy_user_id}, defaulting to ['customer']`);
+          userRoles = ['customer'];
+        }
+        
+        // Parse and format user data
+        const firstName = this.formatName(user.FirstName);
+        const lastName = this.formatName(user.LastName);
+        const email = this.formatEmail(user.Email);
+        
+        // Log formatting for debugging (only for first few users)
+        if (inserted < 5) {
+          console.log(`📝 Formatting user ${user.legacy_user_id}: "${user.FirstName}" → "${firstName}", "${user.LastName}" → "${lastName}", "${user.Email}" → "${email}"`);
+        }
+        
+        // Create user with all required fields
+        const userId = uuidv4();
+        await this.dataSource.query(
+          `INSERT INTO users (
+            id, tenant_id, first_name, last_name, email, password, reset_password_token, 
+            roles, status, phones, notes, legacy_user_id, created_at, updated_at, deleted_at
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`,
+          [
+            userId,
+            this.defaultTenantId,
+            firstName,
+            lastName,
+            email,
+            bcrypt.hashSync(user.Password, 10), // password - hash the legacy password
+            null, // reset_password_token
+            `{${userRoles.join(',')}}`, // Convert array to PostgreSQL array format
+            userStatus,
+            JSON.stringify(userPhones), // Store phones as JSONB
+            `Legacy user: ${user.Username || 'Unknown'}. Role: ${user.Role || 'Customer'}. Last login: ${user.LastLogin || 'Never'}`,
+            user.legacy_user_id.toString(), // Store legacy ID for reference
+            new Date(user.created_at || Date.now()),
+            new Date(user.updated_at || Date.now()),
+            null // deleted_at - set to null for active users
+          ]
+        );
+        
+        // Store user ID mapping for addresses
+        if (!this.userIdMap) this.userIdMap = new Map();
+        this.userIdMap.set(user.legacy_user_id.toString(), userId);
+        
+        inserted++;
+      } else {
+        skipped++;
+      }
+    }
+    
+    console.log(`✅ Users: ${inserted} inserted, ${skipped} skipped`);
+  }
+
+  async seedManagers() {
+    console.log('👥 Seeding users...');
+    
+    let inserted = 0;
+    let skipped = 0;
+    
+    for (const user of this.legacyData.users) {      
+
+      if (user.Role !== 'Staff Manager') {
+        continue;
+      }
+
+      // Skip users without email (required field in new schema)
+      if (!user.Email) {
+        // console.warn(`⚠️ Skipping user ${user.legacy_user_id} - no email address`);
+        continue;
+      }
+
+      const userFormattedEmail = this.formatEmail(user.Email);
+      
+      // Check if user already exists
+      const existing = await this.dataSource.query(
+        'SELECT id FROM users WHERE email = $1 AND tenant_id = $2',
+        [userFormattedEmail, this.defaultTenantId]
+      );
+      
+      if (existing.length === 0) {
+        // Prepare phone data from account phones
+        const userPhones = this.getUserPhones(user.legacy_user_id);
+        
+        // Determine user status based on legacy is_active field
+        let userStatus = 'enabled'; // Default to enabled
+        if (user.is_active === 'false' || user.is_active === false) {
+          userStatus = 'blocked';
+        }
+        
+        // Validate user status enum value
+        if (!['enabled', 'blocked'].includes(userStatus)) {
+          console.warn(`⚠️ Invalid user status for user ${user.legacy_user_id}: ${userStatus}, defaulting to 'enabled'`);
+          userStatus = 'enabled';
+        }
+        
+        // Determine user roles based on legacy role
+        // Map legacy roles to TenantRole enum values: ['operator', 'admin', 'owner', 'customer']
+        let userRoles = ['customer']; // Default role for all users
+        if (user.Role) {
+          const role = user.Role.toLowerCase().trim();
+          if (role === 'staff' || role === 'staff manager') {
+            userRoles = ['admin'];
           }
           // If role is 'customer' or anything else, keep default ['customer']
         }
@@ -232,27 +345,29 @@ class LegacyUserDataSeeder {
     
     for (const account of this.legacyData.accounts) {
 
-      // if (account.is_active === 'false') {
-      //   console.warn(`⚠️ Skipping account ${account.FirstName} ${account.LastName} - account is inactive`);
-      //   continue;
-      // }
+      if (account.is_active === 'false') {
+        // console.warn(`⚠️ Skipping account ${account.FirstName} ${account.LastName} - account is inactive`);
+        continue;
+      }
 
       // Find associated user data for this account
       const user = this.legacyData.users.find(
-        u => u.legacy_user_id === account.legacy_user_id
+        u => u.legacy_user_id === account.legacy_user_id && u.is_active === 'true'
       );
       
-      if (!user && !account.Email) {
-        console.warn(`⚠️ Skipping account ${account.legacy_account_id} - no email data found`);
-        console.log(breakAccountByLackOfEmail);
-        continue;
-      }
-      
-      const userFormattedEmail = this.formatEmail(user.Email);
+      const getFirstName = account.FirstName || user.FirstName;
+      const getLastName = account.LastName || user.LastName;
+      const getEmail = account.Email || user.Email || `temp-${account.legacy_account_id}@veritaswinestorage.com`;
+
+      // Parse and format user data
+      const firstName = this.formatName(getFirstName);
+      const lastName = this.formatName(getLastName);
+      const email = this.formatEmail(getEmail);
+
       // Check if user already exists
       const existing = await this.dataSource.query(
         'SELECT id FROM users WHERE email = $1 AND tenant_id = $2',
-        [userFormattedEmail, this.defaultTenantId]
+        [email, this.defaultTenantId]
       );
       
       if (existing.length === 0) {
@@ -271,19 +386,11 @@ class LegacyUserDataSeeder {
         if (user.Role) {
           const role = user.Role.toLowerCase().trim();
           if (role === 'staff' || role === 'staff manager') {
-            userRoles = ['admin', 'customer'];
+            userRoles = ['admin'];
           }
           // If role is 'customer' or anything else, keep default ['customer']
-        }        
+        }
         
-        const getFirstName = account.FirstName || user.FirstName;
-        const getLastName = account.LastName || user.LastName;
-        const getEmail = account.Email || user.Email || `temp-${account.legacy_account_id}@veritaswinestorage.com`;
-
-        // Parse and format user data
-        const firstName = this.formatName(getFirstName);
-        const lastName = this.formatName(getLastName);
-        const email = this.formatEmail(getEmail);
         // Create user with all required fields
         const userId = uuidv4();
         await this.dataSource.query(
@@ -316,6 +423,7 @@ class LegacyUserDataSeeder {
         
         inserted++;
       } else {
+        console.log(`⚠️ User ${getEmail} already exists`);
         skipped++;
       }
     }
@@ -407,7 +515,7 @@ class LegacyUserDataSeeder {
           });
         } else {
           // Log invalid phone numbers for debugging (optional)
-          console.warn(`⚠️ Skipping invalid phone number for account ${legacyAccountId}: "${phone.PhoneNumber}" (${phone.PhoneLabel || 'unknown'})`);
+          // console.warn(`⚠️ Skipping invalid phone number for account ${legacyAccountId}: "${phone.PhoneNumber}" (${phone.PhoneLabel || 'unknown'})`);
         }
       }
     });
@@ -551,7 +659,7 @@ class LegacyUserDataSeeder {
     console.log('🏠 Seeding addresses...');
     
     if (!this.userIdMap) {
-      console.log('⚠️ No users found, skipping addresses');
+      // console.log('⚠️ No users found, skipping addresses');
       return;
     }
     
@@ -596,7 +704,7 @@ class LegacyUserDataSeeder {
         
         // Validate required fields
         if (!address.AddressLine1 || !address.City || !address.State || !address.ZipCode) {
-          console.warn(`⚠️ Skipping address ${address.legacy_address_id} - missing required fields`);
+          // console.warn(`⚠️ Skipping address ${address.legacy_address_id} - missing required fields`);
           continue;
         }
         
